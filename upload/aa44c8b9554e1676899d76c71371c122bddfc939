@@ -1,0 +1,643 @@
+{
+ "/media/annual-11.webp": {
+  "w": 2000,
+  "h": 1860,
+  "focus": "41% 43%"
+ },
+ "/media/annual-7.webp": {
+  "w": 1588,
+  "h": 2000,
+  "focus": "48% 55%"
+ },
+ "/media/annual-lights.webp": {
+  "w": 2000,
+  "h": 1816,
+  "focus": "42% 43%"
+ },
+ "/media/annual-red.webp": {
+  "w": 2000,
+  "h": 1711,
+  "focus": "44% 40%"
+ },
+ "/media/award-bdf.webp": {
+  "w": 2000,
+  "h": 1125,
+  "focus": null
+ },
+ "/media/award-khanna.webp": {
+  "w": 1602,
+  "h": 2000,
+  "focus": "55% 30%"
+ },
+ "/media/award-social.webp": {
+  "w": 1536,
+  "h": 1023,
+  "focus": "47% 22%"
+ },
+ "/media/cidco-1.webp": {
+  "w": 2000,
+  "h": 1275,
+  "focus": null
+ },
+ "/media/corp-8.webp": {
+  "w": 1860,
+  "h": 2000,
+  "focus": "27% 28%"
+ },
+ "/media/drive/557549525-24771451985821388-1663137907359359613-n.webp": {
+  "w": 2000,
+  "h": 1500,
+  "focus": "48% 20%"
+ },
+ "/media/drive/chief-guest.webp": {
+  "w": 1333,
+  "h": 2000,
+  "focus": "50% 23%"
+ },
+ "/media/drive/garba-workshop.webp": {
+  "w": 1600,
+  "h": 1200,
+  "focus": "55% 51%"
+ },
+ "/media/drive/img-1422.webp": {
+  "w": 1600,
+  "h": 1200,
+  "focus": "50% 32%"
+ },
+ "/media/drive/img-1514.webp": {
+  "w": 2000,
+  "h": 924,
+  "focus": "49% 53%"
+ },
+ "/media/drive/img-1536.webp": {
+  "w": 2000,
+  "h": 924,
+  "focus": "47% 38%"
+ },
+ "/media/drive/img-1544.webp": {
+  "w": 2000,
+  "h": 924,
+  "focus": "52% 32%"
+ },
+ "/media/drive/img-1551.webp": {
+  "w": 2000,
+  "h": 924,
+  "focus": "44% 43%"
+ },
+ "/media/drive/img-4372.webp": {
+  "w": 2000,
+  "h": 1500,
+  "focus": "50% 24%"
+ },
+ "/media/drive/img-4373.webp": {
+  "w": 2000,
+  "h": 1500,
+  "focus": "50% 31%"
+ },
+ "/media/drive/img-7131.webp": {
+  "w": 1500,
+  "h": 2000,
+  "focus": "46% 30%"
+ },
+ "/media/drive/img-e2135.webp": {
+  "w": 2000,
+  "h": 1125,
+  "focus": "59% 32%"
+ },
+ "/media/drive/solo.webp": {
+  "w": 1444,
+  "h": 1647,
+  "focus": "35% 35%"
+ },
+ "/media/drive/sps-4948.webp": {
+  "w": 2000,
+  "h": 1331,
+  "focus": "53% 33%"
+ },
+ "/media/drive/sps-5006.webp": {
+  "w": 2000,
+  "h": 1331,
+  "focus": "53% 34%"
+ },
+ "/media/drive/sps-5021.webp": {
+  "w": 2000,
+  "h": 972,
+  "focus": "54% 32%"
+ },
+ "/media/film-bw.webp": {
+  "w": 1464,
+  "h": 622,
+  "focus": "51% 19%"
+ },
+ "/media/film-ramleela.webp": {
+  "w": 2000,
+  "h": 844,
+  "focus": "57% 22%"
+ },
+ "/media/film-stage.webp": {
+  "w": 1600,
+  "h": 1000,
+  "focus": "53% 29%"
+ },
+ "/media/ga-2011.webp": {
+  "w": 1280,
+  "h": 960,
+  "focus": "50% 31%"
+ },
+ "/media/ga-2013.webp": {
+  "w": 1769,
+  "h": 2000,
+  "focus": "38% 23%"
+ },
+ "/media/ga-2015.webp": {
+  "w": 2000,
+  "h": 1500,
+  "focus": "52% 35%"
+ },
+ "/media/ga-2018.webp": {
+  "w": 1152,
+  "h": 1536,
+  "focus": "50% 28%"
+ },
+ "/media/ga-2020.webp": {
+  "w": 1492,
+  "h": 2000,
+  "focus": "46% 33%"
+ },
+ "/media/kantara.webp": {
+  "w": 1024,
+  "h": 1536,
+  "focus": "50% 30%"
+ },
+ "/media/kids-stage.webp": {
+  "w": 2000,
+  "h": 1125,
+  "focus": "36% 19%"
+ },
+ "/media/maratha.webp": {
+  "w": 1097,
+  "h": 2000,
+  "focus": "52% 16%"
+ },
+ "/media/model-1.webp": {
+  "w": 2000,
+  "h": 1217,
+  "focus": "49% 25%"
+ },
+ "/media/model-2.webp": {
+  "w": 2000,
+  "h": 1113,
+  "focus": "42% 31%"
+ },
+ "/media/model-3.webp": {
+  "w": 2000,
+  "h": 1059,
+  "focus": "48% 17%"
+ },
+ "/media/shoot-1.webp": {
+  "w": 2000,
+  "h": 1186,
+  "focus": "49% 13%"
+ },
+ "/media/shoot-2.webp": {
+  "w": 2000,
+  "h": 1500,
+  "focus": "49% 30%"
+ },
+ "/media/shoot-5.webp": {
+  "w": 1536,
+  "h": 1019,
+  "focus": "58% 41%"
+ },
+ "/media/stage-act.webp": {
+  "w": 1536,
+  "h": 764,
+  "focus": "51% 53%"
+ },
+ "/media/stage-pose.webp": {
+  "w": 1446,
+  "h": 1536,
+  "focus": "30% 31%"
+ },
+ "/media/stage-purple.webp": {
+  "w": null,
+  "h": null,
+  "focus": "52% 33%"
+ },
+ "/media/stage-wide.webp": {
+  "w": 1536,
+  "h": 760,
+  "focus": "46% 47%"
+ },
+ "/media/star-01.webp": {
+  "w": 1308,
+  "h": 2000,
+  "focus": "53% 29%"
+ },
+ "/media/workshop-3.webp": {
+  "w": 1536,
+  "h": 1024,
+  "focus": "49% 31%"
+ },
+ "/media/workshop-steps.webp": {
+  "w": 2000,
+  "h": 1798,
+  "focus": "56% 32%"
+ },
+ "/media/annual-yellow.webp": {
+  "w": 2000,
+  "h": 1746
+ },
+ "/media/cutouts/black-suit.webp": {
+  "w": 841,
+  "h": 1694
+ },
+ "/media/cutouts/resort-set.webp": {
+  "w": 891,
+  "h": 1419
+ },
+ "/media/cutouts/father-son.webp": {
+  "w": 1185,
+  "h": 1004
+ },
+ "/media/portrait.webp": {
+  "w": 1148,
+  "h": 2400
+ },
+ "/media/cutouts/about-portrait.webp": {
+  "w": 1123,
+  "h": 1302
+ },
+ "/media/cutout.webp": {
+  "w": 928,
+  "h": 2400
+ },
+ "/media/kids-selfie.webp": {
+  "w": 2384,
+  "h": 2040
+ },
+ "/media/crew-black.webp": {
+  "w": 2000,
+  "h": 1711
+ },
+ "/media/college-blue.webp": {
+  "w": 1862,
+  "h": 2400
+ },
+ "/media/kids-pink.webp": {
+  "w": 1971,
+  "h": 2400
+ },
+ "/media/crowd-group.webp": {
+  "w": 1912,
+  "h": 2400
+ },
+ "/media/college-duo.webp": {
+  "w": 1912,
+  "h": 2400
+ },
+ "/media/orange-team.webp": {
+  "w": 1766,
+  "h": 2400
+ },
+ "/media/tutu-stage.webp": {
+  "w": 1461,
+  "h": 2400
+ },
+ "/media/annual-castle.webp": {
+  "w": 1402,
+  "h": 2400
+ },
+ "/media/college-group.webp": {
+  "w": 2400,
+  "h": 2042
+ },
+ "/media/kantara-1.webp": {
+  "w": 2109,
+  "h": 2400
+ },
+ "/media/kantara-2.webp": {
+  "w": 1802,
+  "h": 2400
+ },
+ "/media/kantara-3.webp": {
+  "w": 1793,
+  "h": 2400
+ },
+ "/media/kantara-4.webp": {
+  "w": 1678,
+  "h": 2400
+ },
+ "/media/shoot-6.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/shoot-7.webp": {
+  "w": 1800,
+  "h": 2400
+ },
+ "/media/shoot-8.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/shoot-9.webp": {
+  "w": 2400,
+  "h": 2296
+ },
+ "/media/shoot-3.webp": {
+  "w": 2400,
+  "h": 2165
+ },
+ "/media/shoot-4.webp": {
+  "w": 1800,
+  "h": 2400
+ },
+ "/media/drive/zumba-workshop-at-kharghar.webp": {
+  "w": 2400,
+  "h": 1600
+ },
+ "/media/drive/sps-5015.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-5029.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/corp-11.webp": {
+  "w": 2400,
+  "h": 1950
+ },
+ "/media/corp-9.webp": {
+  "w": 2290,
+  "h": 2400
+ },
+ "/media/corp-7.webp": {
+  "w": 2267,
+  "h": 2400
+ },
+ "/media/drive/511559785-9934944376583101-1594443406349416713-n.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/drive/stage-4.webp": {
+  "w": 2400,
+  "h": 1600
+ },
+ "/media/drive/img-8062.webp": {
+  "w": 1350,
+  "h": 2400
+ },
+ "/media/drive/sps-4737.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-4736.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/inter-school-competition-judge.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/drive/sps-4662.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/img-e2137.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/newspaper.webp": {
+  "w": 2400,
+  "h": 2116
+ },
+ "/media/beach.webp": {
+  "w": 1155,
+  "h": 2000
+ },
+ "/media/drive/xevier-clg-annual-day.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/488204111-9579963062063528-615881067786528011-n.webp": {
+  "w": 2400,
+  "h": 2400
+ },
+ "/media/drive/470161923-18481021381000878-7489401811377298798-n.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/judge-7.webp": {
+  "w": 2400,
+  "h": 1923
+ },
+ "/media/drive/qw.webp": {
+  "w": 1850,
+  "h": 2400
+ },
+ "/media/drive/sps-4469.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/img-0143.webp": {
+  "w": 2400,
+  "h": 2124
+ },
+ "/media/judge-10.webp": {
+  "w": 2141,
+  "h": 2400
+ },
+ "/media/judge-11.webp": {
+  "w": 2400,
+  "h": 1891
+ },
+ "/media/drive/img-8166.webp": {
+  "w": 1174,
+  "h": 2400
+ },
+ "/media/judge-9.webp": {
+  "w": 2400,
+  "h": 1688
+ },
+ "/media/drive/487764512-9579963115396856-6154021108373044114-n.webp": {
+  "w": 2048,
+  "h": 1368
+ },
+ "/media/drive/83093369-2779834958743073-5419866290779062272-n.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/sps-5016.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/drive/sps-5017.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/drive/sps-5030.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-5019.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-5000.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/drive/sps-5004.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/drive/sps-4462.webp": {
+  "w": 1596,
+  "h": 2400
+ },
+ "/media/drive/sps-4961.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-5013.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-5033.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-4968.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/sps-4973.webp": {
+  "w": 2400,
+  "h": 1596
+ },
+ "/media/drive/510247005-9934944456583093-2882807665583145135-n.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/annual-6.webp": {
+  "w": 1933,
+  "h": 2400
+ },
+ "/media/drive/img-3432.webp": {
+  "w": 2400,
+  "h": 1600
+ },
+ "/media/drive/img-3434.webp": {
+  "w": 2400,
+  "h": 1600
+ },
+ "/media/drive/img-1552.webp": {
+  "w": 2400,
+  "h": 1108
+ },
+ "/media/drive/represented-patriotic-dance-in-front-of-all-indian-freedom-fighters-family.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/512262144-9963667283710810-6355978748641646566-n.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/horrar-theme-performed.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/img-3691.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/55949814-2078080958936188-5042395320374263808-n.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/drive/img-0765.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/drive/students-performed-in-raf-camp.webp": {
+  "w": 1800,
+  "h": 2400
+ },
+ "/media/annual-4.webp": {
+  "w": 1800,
+  "h": 2400
+ },
+ "/media/annual-10.webp": {
+  "w": 2357,
+  "h": 2400
+ },
+ "/media/annual-2.webp": {
+  "w": 1800,
+  "h": 2400
+ },
+ "/media/drive/img-3995.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/corp-6.webp": {
+  "w": 2124,
+  "h": 2400
+ },
+ "/media/corp-1.webp": {
+  "w": 1583,
+  "h": 2400
+ },
+ "/media/corp-2.webp": {
+  "w": 2400,
+  "h": 1800
+ },
+ "/media/corp-12.webp": {
+  "w": 2219,
+  "h": 2400
+ },
+ "/media/corp-5.webp": {
+  "w": 1613,
+  "h": 2400
+ },
+ "/media/corp-13.webp": {
+  "w": 2400,
+  "h": 2044
+ },
+ "/media/corp-10.webp": {
+  "w": 2392,
+  "h": 2400
+ },
+ "/media/corp-4.webp": {
+  "w": 2400,
+  "h": 1983
+ },
+ "/media/corp-3.webp": {
+  "w": 2000,
+  "h": 1743
+ },
+ "/media/drive/img-8050.webp": {
+  "w": 1125,
+  "h": 2000
+ },
+ "/media/drive/img-8061.webp": {
+  "w": 1350,
+  "h": 2400
+ },
+ "/media/drive/sangeet.webp": {
+  "w": 2400,
+  "h": 1350
+ },
+ "/media/drive/taluka-felicitation.webp": {
+  "w": 837,
+  "h": 438
+ },
+ "/media/cutouts/limelight.webp": {
+  "w": 671,
+  "h": 1238
+ },
+ "/media/cutouts/kantara.webp": {
+  "w": 951,
+  "h": 1508
+ }
+}

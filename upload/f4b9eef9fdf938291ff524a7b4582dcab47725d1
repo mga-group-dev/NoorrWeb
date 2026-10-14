@@ -1,0 +1,217 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Phone, Mail, Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react";
+import { MaskLine } from "@/components/ui/Reveal";
+import Ornament from "@/components/Ornament";
+import { CONTACT_PAGE } from "@/constants/testIds";
+import { CONTACT } from "@/content";
+
+const SERVICES_OPTIONS = ["School program", "College event", "Corporate show", "Wedding or sangeet", "Workshop", "Film or celebrity", "Other"];
+const EMPTY = { name: "", email: "", phone: "", service: SERVICES_OPTIONS[0], message: "" };
+
+function Field({ id, label, children }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-sm font-semibold text-[#474B5C]">
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+export default function Contact() {
+  const [form, setForm] = useState(EMPTY);
+  const [sending, setSending] = useState(false);
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  // Links like /contact?service=School%20program&topic=Annual%20day pre-fill the form.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const service = q.get("service");
+    const topic = q.get("topic");
+    setForm((f) => ({
+      ...f,
+      service: SERVICES_OPTIONS.includes(service) ? service : f.service,
+      message: topic && !f.message ? `I'm interested in ${topic.toLowerCase()}. ` : f.message,
+    }));
+  }, []);
+
+  const viaWhatsApp = () => {
+    const text = `Hi Noorr, I'm ${form.name} (${form.phone}, ${form.email}).\nEvent type: ${form.service}\n\n${form.message}`;
+    window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+  };
+
+  // Sends the enquiry by email (app/api/contact, through Resend). If email isn't set up or fails, WhatsApp is offered instead.
+  const submit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    try {
+      const company = e.currentTarget.elements.company?.value || "";
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, company }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 503) {
+        viaWhatsApp();
+        toast.success("Inquiry ready in WhatsApp. Press send to reach Noorr.");
+        return;
+      }
+      if (!res.ok) throw new Error(data.error || `Server returned ${res.status}`);
+      toast.success("Inquiry sent. Noorr's team will get back to you soon.");
+      setForm(EMPTY);
+    } catch (err) {
+      toast.error(`Inquiry not sent: ${err.message}. Try again, or send it on WhatsApp.`, {
+        action: { label: "WhatsApp", onClick: viaWhatsApp },
+      });
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <main id="main" data-testid={CONTACT_PAGE.page} className="relative min-h-[100dvh] sec-sky overflow-hidden pt-36 md:pt-40 pb-28">
+      <div className="sunrise absolute inset-x-0 top-0 h-[560px] opacity-60" aria-hidden="true" />
+      <div className="relative wrap grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 lg:gap-14">
+        <div>
+          <Ornament className="w-28 text-[#f08a4b] mb-6" />
+          <h1 className="f-display text-[clamp(3.4rem,9vw,8rem)] leading-[0.9]">
+            <MaskLine>Book Noorr</MaskLine>
+          </h1>
+          <p className="text-lg md:text-xl text-[#474B5C] mt-5 max-w-[46ch]">
+            A school annual day, a college fest, an office show or a workshop: share a few details and Noorr will get back to you.
+          </p>
+
+          <form onSubmit={submit} className="card-grad mt-10 grid gap-6 p-6 md:p-9">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <Field id="name" label="Full name">
+                <input id="name" data-testid={CONTACT_PAGE.nameInput} required minLength={2} value={form.name} onChange={set("name")} autoComplete="name" className="field" />
+              </Field>
+              <Field id="email" label="Email">
+                <input id="email" data-testid={CONTACT_PAGE.emailInput} required type="email" value={form.email} onChange={set("email")} autoComplete="email" className="field" />
+              </Field>
+            </div>
+            <Field id="phone" label="Phone">
+              <input id="phone" data-testid={CONTACT_PAGE.phoneInput} required minLength={7} type="tel" value={form.phone} onChange={set("phone")} autoComplete="tel" className="field" />
+            </Field>
+            {/* Event type as tap-to-pick chips (a radio group), so the choice is visible at a glance. */}
+            <fieldset data-testid={CONTACT_PAGE.serviceSelect}>
+              <legend className="text-sm font-semibold text-[#474B5C] mb-3">What&apos;s the occasion?</legend>
+              <div className="flex flex-wrap gap-2.5">
+                {SERVICES_OPTIONS.map((o) => {
+                  const on = form.service === o;
+                  return (
+                    <label
+                      key={o}
+                      className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium border transition-all duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[#f26a1b]/50 ${
+                        on
+                          ? "bg-[#15172A] border-[#15172A] text-white shadow-[0_8px_20px_-10px_rgba(21,23,42,0.7)]"
+                          : "bg-white border-black/10 text-[#15172A]/80 hover:border-[#f26a1b]/50 hover:text-[#c2410c] hover:bg-[#fff1e6]"
+                      }`}
+                    >
+                      <input type="radio" name="service" value={o} checked={on} onChange={set("service")} className="sr-only" />
+                      {o}
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+            <Field id="message" label="Event details">
+              <textarea
+                id="message"
+                data-testid={CONTACT_PAGE.messageInput}
+                required
+                minLength={5}
+                rows={5}
+                value={form.message}
+                onChange={set("message")}
+                placeholder="Dates, city, audience size and what you have in mind"
+                className="field resize-none"
+              />
+            </Field>
+            {/* Honeypot for spam bots: hidden from people and screen readers; anything typed here is ignored by the server. */}
+            <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
+            <button type="submit" disabled={sending} data-testid={CONTACT_PAGE.submitBtn} className="btn-primary justify-self-start disabled:opacity-60">
+              {sending ? "Sending inquiry..." : "Send inquiry"}
+            </button>
+          </form>
+        </div>
+
+        <aside data-testid={CONTACT_PAGE.infoBlock} className="lg:pt-10 space-y-5">
+          {/* Noorr himself, free-standing over a sunrise glow, with the direct lines below. */}
+          <div className="card-grad relative overflow-hidden p-0">
+            <div className="relative h-[340px] md:h-[380px]">
+              <div aria-hidden="true" className="absolute inset-x-[10%] top-[10%] bottom-0 rounded-full blur-3xl opacity-80 bg-[radial-gradient(circle_at_50%_45%,rgba(242,106,27,0.5),rgba(185,198,247,0.45)_55%,transparent_75%)]" />
+              <img src="/media/cutouts/about-portrait.webp" alt="Noorr Khan" className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_24px_30px_rgba(21,23,42,0.25)]" />
+            </div>
+            <div className="relative border-t border-black/5 bg-white/70 backdrop-blur px-6 py-5">
+              <p className="f-display text-3xl leading-none">Talk to Noorr</p>
+              <p className="text-[var(--muted)] text-sm mt-1.5">Call, WhatsApp or email: whichever is easiest for you.</p>
+            </div>
+          </div>
+
+          <div className="grid gap-3">
+            {CONTACT.phones.map((p, i) => (
+              <a key={p} href={`tel:${p}`} className="group card-grad flex items-center gap-4 px-5 py-4 transition hover:-translate-y-0.5">
+                <span className="grid place-items-center w-11 h-11 rounded-full bg-[#fff1e6] text-[#c2410c] group-hover:bg-[#f26a1b] group-hover:text-white transition-colors">
+                  <Phone size={18} aria-hidden="true" />
+                </span>
+                <span className="flex-1">
+                  <span className="block text-xs uppercase tracking-[0.14em] text-[var(--muted)]">{i === 0 ? "Call" : "Or call"}</span>
+                  <span className="block f-display text-2xl tabular">+91 {p.slice(0, 5)} {p.slice(5)}</span>
+                </span>
+              </a>
+            ))}
+            <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className="group flex items-center gap-4 rounded-[22px] bg-[#25d366] text-[#0b1f12] px-5 py-4 shadow-[0_18px_40px_-18px_rgba(37,211,102,0.8)] transition hover:-translate-y-0.5">
+              <span className="grid place-items-center w-11 h-11 rounded-full bg-white/35">
+                <MessageCircle size={18} aria-hidden="true" />
+              </span>
+              <span className="flex-1">
+                <span className="block text-xs uppercase tracking-[0.14em] opacity-75">Quickest reply</span>
+                <span className="block font-semibold text-lg">Chat on WhatsApp</span>
+              </span>
+            </a>
+            <a href={`mailto:${CONTACT.email}`} className="group card-grad flex items-center gap-4 px-5 py-4 transition hover:-translate-y-0.5">
+              <span className="grid place-items-center w-11 h-11 rounded-full bg-[#fff1e6] text-[#c2410c] group-hover:bg-[#f26a1b] group-hover:text-white transition-colors shrink-0">
+                <Mail size={18} aria-hidden="true" />
+              </span>
+              <span className="flex-1 min-w-0">
+                <span className="block text-xs uppercase tracking-[0.14em] text-[var(--muted)]">Email</span>
+                {/* Wrap at the "@" on narrow phones instead of mid-word. */}
+                <span className="block font-medium text-[15px] sm:text-base [overflow-wrap:anywhere]">
+                  {CONTACT.email.split("@")[0]}<wbr />@{CONTACT.email.split("@")[1]}
+                </span>
+              </span>
+            </a>
+          </div>
+
+          <div className="card-grad px-5 py-4">
+            <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">Follow Noorr</p>
+            <div className="flex flex-wrap gap-2.5 mt-3">
+              {[
+                { href: CONTACT.instagram.url, label: "Instagram", Icon: Instagram, id: "contact-instagram-link" },
+                { href: CONTACT.facebook.url, label: "Facebook", Icon: Facebook, id: "contact-facebook-link" },
+                { href: CONTACT.linkedin.url, label: "LinkedIn", Icon: Linkedin, id: "contact-linkedin-link" },
+              ].map(({ href, label, Icon, id }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-testid={id}
+                  className="inline-flex items-center gap-2 rounded-full bg-white border border-black/10 px-4 py-2 text-sm font-medium text-[#15172A]/80 transition hover:border-[#f26a1b]/50 hover:text-[#c2410c] hover:bg-[#fff1e6]"
+                >
+                  <Icon size={16} aria-hidden="true" /> {label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  );
+}

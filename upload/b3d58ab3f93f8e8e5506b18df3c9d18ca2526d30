@@ -1,0 +1,206 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { CAREER, focusOf, srcSetOf } from "@/content";
+import { EASE } from "./ui/Reveal";
+
+const INTERVAL = 5000;
+
+// Noorr's career along a line that fills up to the chosen stop; the chosen stop opens as a large photo with its story.
+// It plays through on its own once on screen, and pauses while the visitor hovers or picks a stop.
+// On narrow screens the rail scrolls sideways and keeps the chosen stop in view.
+export default function JourneyTimeline() {
+  const reduce = useReducedMotion();
+  const ref = useRef(null);
+  const rail = useRef(null);
+  const inView = useInView(ref, { amount: 0.35 });
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const n = CAREER.length;
+  const last = n - 1;
+  const go = (k) => setI((k + n) % n);
+  const edge = 50 / n; // the line runs from the centre of the first stop to the centre of the last
+
+  useEffect(() => {
+    if (!inView || paused || reduce) return;
+    const id = setTimeout(() => go(i + 1), INTERVAL);
+    return () => clearTimeout(id);
+  }, [i, inView, paused, reduce]);
+
+  useEffect(() => {
+    const el = rail.current?.querySelector(`[data-stop="${i}"]`);
+    const box = rail.current;
+    if (el && box && box.scrollWidth > box.clientWidth) {
+      box.scrollTo({ left: el.offsetLeft - box.clientWidth / 2 + el.clientWidth / 2, behavior: reduce ? "auto" : "smooth" });
+    }
+  }, [i, reduce]);
+
+  const cur = CAREER[i];
+  return (
+    <div ref={ref} className="mt-16" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      {/* Rail */}
+      <div ref={rail} className="overflow-x-auto [scrollbar-width:none] -mx-5 px-5 md:mx-0 md:px-0">
+        <div className="relative min-w-[760px]" role="tablist" aria-label="Noorr's journey">
+          <span aria-hidden="true" className="absolute top-[9px] h-[2px] rounded-full bg-[rgba(21,23,42,0.08)]" style={{ left: `${edge}%`, right: `${edge}%` }} />
+          <motion.span
+            aria-hidden="true"
+            className="absolute top-[9px] h-[2px] rounded-full bg-gradient-to-r from-[#f26a1b] to-[#5d68c9]"
+            style={{ left: `${edge}%` }}
+            initial={false}
+            animate={{ width: `${(i / last) * (100 - 2 * edge)}%` }}
+            transition={{ duration: reduce ? 0 : 0.8, ease: EASE }}
+          />
+          <div className="relative grid" style={{ gridTemplateColumns: `repeat(${n}, minmax(0, 1fr))` }}>
+            {CAREER.map((j, k) => {
+              const on = k === i;
+              const done = k < i;
+              return (
+                <button
+                  key={j.title}
+                  data-stop={k}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  onClick={() => { go(k); setPaused(true); }}
+                  className="group flex flex-col items-center text-center outline-none"
+                >
+                  <span className="relative grid place-items-center w-5 h-5">
+                    {on && !reduce && (
+                      <motion.span
+                        aria-hidden="true"
+                        className="absolute inset-0 rounded-full bg-[#f26a1b]/30"
+                        animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
+                        transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+                      />
+                    )}
+                    <span
+                      className={`block rounded-full ring-4 ring-white shadow transition-all duration-500 ${
+                        on ? "w-5 h-5 bg-gradient-to-br from-[#f26a1b] to-[#5d68c9]" : done ? "w-3.5 h-3.5 bg-[#c76a3a]" : "w-3.5 h-3.5 bg-[#cfd3e6] group-hover:bg-[#f6a26c]"
+                      }`}
+                    />
+                  </span>
+                  <span
+                    className={`f-display tabular mt-4 transition-all duration-500 ${
+                      on ? "text-[clamp(1.9rem,3vw,2.7rem)] text-grad" : "text-[clamp(1.3rem,1.9vw,1.75rem)] text-[#15172a]/35 group-hover:text-[#15172a]/70"
+                    }`}
+                  >
+                    {j.year}
+                  </span>
+                  <span className={`text-xs font-semibold uppercase tracking-[0.14em] mt-1 transition-colors duration-500 ${on ? "text-[var(--accent)]" : "text-[#15172a]/35"}`}>
+                    {j.tag}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Chosen stop */}
+      <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
+        <div className="relative card-grad p-3">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[16px] bg-[#15172a]">
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.div
+                key={cur.img}
+                className="absolute inset-0"
+                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.12, filter: "blur(8px)" }}
+                animate={{ opacity: 1, scale: 1.02, filter: "blur(0px)" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduce ? 0.3 : 1.1, ease: EASE }}
+              >
+                {cur.contain && (
+                  <img src={cur.img} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-60" />
+                )}
+                <img
+                  src={cur.img}
+                  srcSet={srcSetOf(cur.img)}
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  alt={`Noorr Khan, ${cur.year}: ${cur.title}`}
+                  className={`absolute inset-0 w-full h-full ${cur.contain ? "object-contain p-6 pb-20" : "object-cover"}`}
+                  style={cur.contain ? undefined : { objectPosition: focusOf(cur.img) }}
+                />
+              </motion.div>
+            </AnimatePresence>
+            <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#15172a]/60 via-transparent to-transparent" />
+            {/* Only real years are set large over the photo; the "Now" stop shows the photo clean. */}
+            <AnimatePresence mode="wait" initial={false}>
+              {/^\d+$/.test(cur.year) && (
+              <motion.span
+                key={cur.title}
+                aria-hidden="true"
+                className="absolute left-5 bottom-3 f-display text-white/90 text-[clamp(3.5rem,8vw,6.5rem)] leading-none tabular"
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                {cur.year}
+              </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
+          {/* Autoplay progress */}
+          <div className="h-[3px] mx-2 mt-3 rounded-full bg-[rgba(21,23,42,0.08)] overflow-hidden">
+            {!reduce && (
+              <motion.span
+                key={`${i}-${paused}-${inView}`}
+                className="block h-full bg-gradient-to-r from-[#f26a1b] to-[#5d68c9]"
+                initial={{ width: "0%" }}
+                animate={{ width: paused || !inView ? "0%" : "100%" }}
+                transition={{ duration: paused || !inView ? 0 : INTERVAL / 1000, ease: "linear" }}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* The chapter text sits in a highlighted card: a warm glow behind it and a sunrise accent bar down the left edge. */}
+        <div aria-live="polite" className="relative">
+          <div aria-hidden="true" className="absolute -inset-6 rounded-[36px] bg-[radial-gradient(60%_70%_at_30%_40%,rgba(242,106,27,0.18),rgba(185,198,247,0.18)_60%,transparent_80%)] blur-2xl" />
+          <div className="relative overflow-hidden rounded-[26px] bg-white/85 backdrop-blur-md ring-1 ring-[#f08a4b]/25 shadow-[0_30px_70px_-35px_rgba(242,106,27,0.55)] p-7 md:p-10 pl-9 md:pl-12">
+          <span aria-hidden="true" className="absolute left-0 top-0 bottom-0 w-[5px] bg-gradient-to-b from-[#f26a1b] to-[#5d68c9]" />
+          <p className="kicker">
+            Chapter {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
+          </p>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={cur.title}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, x: -20 }}
+              transition={{ duration: 0.55, ease: EASE }}
+            >
+              <span className="inline-block mt-4 rounded-full chip-grad px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+                {cur.tag}
+              </span>
+              <h3 className="f-display text-grad text-[clamp(2.4rem,4.4vw,4rem)] leading-[1.02] mt-3 pb-1">{cur.title}</h3>
+              <p className="text-lg md:text-xl text-[var(--fg)] mt-4 max-w-[44ch] leading-relaxed">{cur.body}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="flex items-center gap-3 mt-8">
+            <button
+              type="button"
+              onClick={() => { go(i - 1); setPaused(true); }}
+              aria-label="Previous chapter"
+              className="grid place-items-center w-12 h-12 rounded-full border border-[rgba(21,23,42,0.15)] text-[#15172a] transition hover:bg-[#15172a] hover:text-white active:scale-95"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => { go(i + 1); setPaused(true); }}
+              aria-label="Next chapter"
+              className="grid place-items-center w-12 h-12 rounded-full bg-[#15172a] text-white transition hover:bg-[#2a2d52] active:scale-95"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,168 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { Reveal, Frame } from "./ui/Reveal";
+import SmartImg from "./ui/SmartImg";
+import Ornament from "./Ornament";
+import JourneyTimeline from "./JourneyTimeline";
+import { STAGE_CHAPTERS, CREDITS, AWARDS, focusOf, srcSetOf } from "@/content";
+
+// Shared centred heading: ornament, small label, display title, optional lead.
+function Head({ kicker, title, children }) {
+  return (
+    <Reveal className="text-center flex flex-col items-center">
+      <Ornament className="w-28 text-[#f08a4b]" />
+      <p className="kicker mt-5">{kicker}</p>
+      <h2 className="f-display text-[clamp(2.4rem,4.6vw,4.2rem)] leading-[1.02] mt-4 max-w-[18ch]">{title}</h2>
+      {children && <p className="text-lg text-[var(--body)] mt-5 max-w-[56ch]">{children}</p>}
+    </Reveal>
+  );
+}
+
+// Four kinds of work as full-bleed photo cards in an alternating wide/narrow bento. Each card opens its page;
+// on hover the photo slowly zooms and the full description slides up.
+export function WhatHeDoes() {
+  const spans = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
+  return (
+    <section className="sec-sky py-24 md:py-32" aria-label="What Noorr does">
+      <div className="wrap">
+        <Head kicker="What Noorr does" title="One choreographer, every kind of stage">
+          From a classroom of first-timers to a corporate gala, the routine is built for the room in front of him.
+        </Head>
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {STAGE_CHAPTERS.map((c, i) => (
+            <Reveal key={c.title} delay={(i % 2) * 0.08} className={spans[i]}>
+              <Link
+                href={c.href}
+                className="group relative block h-[380px] md:h-[460px] overflow-hidden rounded-[22px] bg-[#15172a] shadow-[0_30px_60px_-35px_rgba(21,23,42,0.65)] ring-1 ring-black/5"
+              >
+                <SmartImg
+                  src={c.cover}
+                  srcSet={srcSetOf(c.cover)}
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.07]"
+                  style={{ objectPosition: focusOf(c.cover) }}
+                />
+                <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0b0c16]/95 via-[#0b0c16]/55 md:from-[#0b0c16]/90 md:via-[#0b0c16]/25 to-transparent" />
+                <span className="absolute top-5 left-5 rounded-full bg-white/15 backdrop-blur-md px-3 py-1 text-xs font-medium tracking-[0.14em] uppercase text-white/90 tabular">
+                  0{i + 1}
+                </span>
+                <span className="absolute inset-x-0 bottom-0 p-5 md:p-8 text-white">
+                  <span className="flex items-end justify-between gap-4 md:gap-6">
+                    <span>
+                      <span className="block f-display text-[clamp(1.9rem,3vw,2.6rem)] leading-[1.05]">{c.title}</span>
+                      <span className="block text-white/80 mt-3 max-w-[48ch] leading-relaxed line-clamp-3 md:line-clamp-2 md:group-hover:line-clamp-none">{c.body}</span>
+                    </span>
+                    <span aria-hidden="true" className="shrink-0 grid place-items-center w-12 h-12 rounded-full bg-white text-[#15172a] transition-transform duration-500 group-hover:-rotate-45 group-hover:scale-110">
+                      <ArrowUpRight size={20} className="rotate-45" />
+                    </span>
+                  </span>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="text-center mt-10">
+          <Link href="/stage" className="link-arrow">
+            See the stage work <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// Noorr's career, film sets to brand work, as an interactive timeline.
+export function JourneyLine({ light = false }) {
+  return (
+    <section className={`${light ? "sec-sky" : "sec-peach"} py-24 md:py-32 overflow-hidden`} aria-label="Noorr's journey">
+      <div className="wrap">
+        <Head kicker="Since 2011" title="Noorr's journey">
+          From a dancer on Bollywood sets to an award-winning choreographer, competition judge and the face of a brand campaign.
+        </Head>
+        <Reveal>
+          <JourneyTimeline />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// Star credits drifting past like an end roll.
+export function StarsReel() {
+  const row = [...CREDITS, ...CREDITS];
+  return (
+    <section className="sec-dawn py-24 md:py-32 overflow-hidden" aria-label="On screen">
+      <div className="wrap">
+        <Head kicker="On screen" title="Shared sets with the biggest names">
+          Dancer, choreographer and assistant choreographer on 60+ films and video albums.
+        </Head>
+      </div>
+      <ul className="sr-only">
+        {CREDITS.map((c) => (
+          <li key={c.star}>
+            {c.star}, {c.work}
+          </li>
+        ))}
+      </ul>
+      {/* Tall poster cards: the photo fills the card and the name sits on it like a film credit. Hovering pauses the roll. */}
+      <div aria-hidden="true" className="group/reel mt-14 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
+        <div className="reel-track gap-5 py-4 group-hover/reel:[animation-play-state:paused]">
+          {row.map((c, i) => (
+            <div
+              key={i}
+              className="group relative shrink-0 w-[250px] md:w-[280px] aspect-[3/4] overflow-hidden rounded-[22px] bg-[#15172a] ring-1 ring-black/5 shadow-[0_30px_50px_-30px_rgba(21,23,42,0.6)] transition-transform duration-500 hover:-translate-y-2"
+            >
+              <SmartImg
+                src={c.img}
+                srcSet={srcSetOf(c.img)}
+                sizes="280px"
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.07]"
+                style={{ objectPosition: focusOf(c.img) }}
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-[#0b0c16]/90 via-[#0b0c16]/15 to-transparent" />
+              <span className="absolute top-4 left-4 rounded-full bg-white/85 backdrop-blur px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#15172a]">
+                {c.work}
+              </span>
+              <span className="absolute left-5 right-5 bottom-5">
+                <span className="block text-[11px] uppercase tracking-[0.2em] text-white/60">{c.star.startsWith("Featured in ") ? "Featured in" : "With"}</span>
+                <span className="block f-display text-[2rem] leading-[1.05] text-white mt-1">{c.star.replace("Featured in ", "")}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Awards as a row of portrait cards.
+export function Recognition() {
+  return (
+    <section className="sec-sky py-24 md:py-32" aria-label="Recognition">
+      <div className="wrap">
+        <Head kicker="Recognition" title="Awards and honours" />
+        <ul className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {AWARDS.map((a, i) => (
+            <li key={a.title} className="list-none">
+              <Reveal delay={i * 0.06} className="card-grad p-2 pb-4 h-full">
+                <Frame src={a.img} alt={a.title} contain={a.contain} sizes="(max-width: 1024px) 50vw, 20vw" className="aspect-[4/5] !rounded-[14px]" />
+                <p className="font-medium text-[var(--fg)] mt-3 px-2 leading-snug">{a.title}</p>
+                <p className="text-sm text-[var(--muted)] px-2 mt-0.5">{a.by}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+        <Reveal className="text-center mt-10">
+          <Link href="/awards" className="link-arrow">
+            Judging and awards <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

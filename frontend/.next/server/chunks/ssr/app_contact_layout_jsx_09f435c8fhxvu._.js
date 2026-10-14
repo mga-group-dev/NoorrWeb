@@ -1,3 +1,0 @@
-module.exports=[33878,a=>{"use strict";a.s(["default",0,function({children:a}){return a},"metadata",0,{title:"Book Noor",description:"Book Noor Khan for school annual days, college fests, corporate shows, dance workshops and film choreography. Call, WhatsApp or send an enquiry.",alternates:{canonical:"/contact"}}])},22853,function(a){a.n(a.i(33878))}];
-
-//# sourceMappingURL=app_contact_layout_jsx_09f435c8fhxvu._.js.map

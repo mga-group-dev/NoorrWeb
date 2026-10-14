@@ -1,0 +1,12 @@
+# Copy to .env.local (local) or add in your host's dashboard (e.g. Vercel → Settings → Environment Variables).
+
+# Contact form email, sent through Resend (https://resend.com → API Keys).
+RESEND_API_KEY=
+# Where enquiries are delivered. Defaults to the public contact email in src/content.js.
+CONTACT_TO_EMAIL=
+# Sender address. Must be on a domain you have verified in Resend, e.g. "Noorr Khan <bookings@yourdomain.com>".
+# Left empty, Resend's test sender is used, which only delivers to the email address of your Resend account.
+CONTACT_FROM_EMAIL=
+
+# The site's public address, used for canonical links, the sitemap and social previews.
+NEXT_PUBLIC_SITE_URL=

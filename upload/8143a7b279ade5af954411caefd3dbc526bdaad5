@@ -1,0 +1,102 @@
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { MaskIn, Reveal } from "./ui/Reveal";
+import { CREDITS } from "@/content";
+
+// Film credits roll. On desktop, hovering a credit floats its frame beside the cursor.
+export default function Bollywood() {
+  const ref = useRef(null);
+  const list = useRef(null);
+  const reduce = useReducedMotion();
+  const [active, setActive] = useState(null);
+
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const stillY = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
+
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 180, damping: 22 });
+  const sy = useSpring(my, { stiffness: 180, damping: 22 });
+
+  const onMove = (e) => {
+    const r = list.current.getBoundingClientRect();
+    mx.set(e.clientX - r.left);
+    my.set(e.clientY - r.top);
+  };
+
+  return (
+    <section id="bollywood" ref={ref} className="relative bg-[#FFFFFF] py-24 md:py-36">
+      <div className="wrap">
+        <h2 className="f-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[0.92]">
+          <MaskIn>Bollywood film</MaskIn>
+          <MaskIn delay={0.08}>experience</MaskIn>
+        </h2>
+        <Reveal>
+          <p className="text-lg md:text-xl text-[#6B7080] mt-6 max-w-[48ch]">
+            Over 60 movies and video albums as dancer, choreographer and assistant choreographer.
+          </p>
+        </Reveal>
+      </div>
+
+      {/* Cinemascope still */}
+      <div className="relative mt-14 md:mt-20 w-full h-[240px] md:h-auto md:aspect-[2.39/1] overflow-hidden">
+        <motion.img
+          src="/media/film-ramleela.webp"
+          alt="Noorr Khan in a song sequence from Ramleela"
+          loading="lazy"
+          className="absolute inset-x-0 -top-[15%] w-full h-[130%] object-cover"
+          style={reduce ? undefined : { y: stillY }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF] via-transparent to-[#FFFFFF]" />
+      </div>
+
+      <div className="wrap mt-10 md:mt-16">
+        <ul ref={list} onMouseMove={onMove} onMouseLeave={() => setActive(null)} className="relative">
+          {CREDITS.map((c, i) => (
+            <li
+              key={c.star}
+              onMouseEnter={() => setActive(i)}
+              className="group grid grid-cols-[auto_1fr] md:grid-cols-[1fr_auto] items-center gap-4 py-4 md:py-5 border-b border-black/10"
+            >
+              <img src={c.img} alt="" loading="lazy" className="md:hidden w-16 h-16 rounded-lg object-cover" />
+              <div className="md:contents">
+                <p className="f-display text-[clamp(1.8rem,5vw,4.5rem)] leading-none text-[#15172A] md:group-hover:text-[#15172A] md:group-hover:translate-x-3 transition-all duration-500">
+                  {c.star}
+                </p>
+                <p className="text-[#6B7080] md:text-lg mt-1 md:mt-0 md:text-right">{c.work}</p>
+              </div>
+            </li>
+          ))}
+
+          <AnimatePresence>
+            {active !== null && !reduce && (
+              <motion.div
+                key="float"
+                className="hidden md:block pointer-events-none absolute top-0 left-0 w-[300px] aspect-[4/5] -ml-[150px] -mt-[190px] overflow-hidden rounded-2xl z-10 shadow-[0_30px_80px_rgba(60,45,30,0.2)]"
+                style={{ x: sx, y: sy }}
+                initial={{ opacity: 0, scale: 0.6, rotate: -6 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ type: "spring", stiffness: 220, damping: 22 }}
+              >
+                <AnimatePresence initial={false}>
+                  <motion.img
+                    key={active}
+                    src={CREDITS[active].img}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover"
+                    initial={{ opacity: 0, scale: 1.15 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                  />
+                </AnimatePresence>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </ul>
+      </div>
+    </section>
+  );
+}

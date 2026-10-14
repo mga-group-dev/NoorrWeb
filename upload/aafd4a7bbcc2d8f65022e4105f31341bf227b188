@@ -1,0 +1,128 @@
+import Link from "next/link";
+import { ArrowUp, ArrowUpRight, Mail, MessageCircle, Phone } from "lucide-react";
+import { LINKS } from "./Navbar";
+import { FOOTER } from "@/constants/testIds";
+import { CONTACT, IDENTITY, STAGE_CHAPTERS } from "@/content";
+
+// Brand column, three link columns and a bottom bar, then the name set huge and filled with a stage photo,
+// closing the page like an end title.
+export default function Footer() {
+  const heading = "text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)]";
+  const link = "text-[var(--body)] hover:text-[var(--fg)] transition-colors";
+  return (
+    <footer data-testid={FOOTER.section} className="tone-paper border-t border-[color:var(--rule)] pt-16 md:pt-20 pb-28 lg:pb-10 overflow-hidden">
+      <div className="wrap grid grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1fr_1.2fr] gap-x-8 gap-y-12">
+        {/* Brand */}
+        <div className="col-span-2 lg:col-span-1">
+          <Link href="/" className="f-script text-[#15172a] text-[2.8rem] leading-[1.2] inline-block px-1">
+            Noorr Khan
+          </Link>
+          <p className="text-[var(--body)] mt-3 max-w-[36ch] leading-relaxed">
+            {IDENTITY.role}. {IDENTITY.founder}.
+          </p>
+          <div className="flex flex-wrap gap-2.5 mt-6">
+            <a
+              href={CONTACT.instagram.url}
+              target="_blank"
+              rel="noreferrer"
+              data-testid={FOOTER.instagram}
+              className="chip-grad rounded-full px-4 py-2 text-sm inline-flex items-center gap-1.5 hover:-translate-y-0.5 transition"
+            >
+              Instagram <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+            <a
+              href={CONTACT.facebook.url}
+              target="_blank"
+              rel="noreferrer"
+              data-testid={FOOTER.facebook}
+              className="chip-grad rounded-full px-4 py-2 text-sm inline-flex items-center gap-1.5 hover:-translate-y-0.5 transition"
+            >
+              Facebook <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+            <a
+              href={CONTACT.linkedin.url}
+              target="_blank"
+              rel="noreferrer"
+              className="chip-grad rounded-full px-4 py-2 text-sm inline-flex items-center gap-1.5 hover:-translate-y-0.5 transition"
+            >
+              LinkedIn <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        {/* Pages */}
+        <nav aria-label="Footer">
+          <p className={heading}>Explore</p>
+          <ul className="mt-5 space-y-3">
+            {LINKS.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={link}>{l.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* What he does */}
+        <div>
+          <p className={heading}>What Noorr does</p>
+          <ul className="mt-5 space-y-3">
+            {STAGE_CHAPTERS.map((c) => (
+              <li key={c.title}>
+                <Link href="/stage" className={link}>{c.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div className="col-span-2 lg:col-span-1">
+          <p className={heading}>Get in touch</p>
+          <ul className="mt-5 space-y-3.5">
+            {CONTACT.phones.map((p) => (
+              <li key={p}>
+                <a href={`tel:${p}`} className={`${link} inline-flex items-center gap-3 tabular`}>
+                  <span className="grid place-items-center w-9 h-9 rounded-full card-grad"><Phone size={15} aria-hidden="true" /></span>
+                  +91 {p.slice(0, 5)} {p.slice(5)}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className={`${link} inline-flex items-center gap-3`}>
+                <span className="grid place-items-center w-9 h-9 rounded-full card-grad"><MessageCircle size={15} aria-hidden="true" /></span>
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${CONTACT.email}`} className={`${link} inline-flex items-center gap-3 break-all`}>
+                <span className="grid place-items-center w-9 h-9 rounded-full card-grad shrink-0"><Mail size={15} aria-hidden="true" /></span>
+                {CONTACT.email}
+              </a>
+            </li>
+          </ul>
+          <Link href="/contact" className="btn-primary !py-2.5 !px-5 !text-sm mt-7 inline-flex">
+            Book Noorr
+          </Link>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="wrap mt-14">
+        <div className="rule-grad" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-sm text-[var(--muted)]">
+          <p>© {new Date().getFullYear()} Noorr Khan · NR Institute of Dance</p>
+          <a href="#main" className="inline-flex items-center gap-2 hover:text-[var(--fg)] transition-colors">
+            Back to top <ArrowUp size={14} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+
+      <p
+        aria-hidden="true"
+        className="f-display text-center leading-[0.85] mt-10 select-none whitespace-nowrap text-[clamp(4.5rem,19vw,19rem)] tracking-[-0.04em] text-transparent bg-center wordmark-pan"
+        style={{ backgroundImage: "url(/media/stage-wide.webp)", WebkitBackgroundClip: "text", backgroundClip: "text" }}
+      >
+        noorr khan
+      </p>
+    </footer>
+  );
+}

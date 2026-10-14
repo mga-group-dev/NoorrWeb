@@ -1,0 +1,110 @@
+import Link from "next/link";
+import { ArrowRight, Star } from "lucide-react";
+import { Reveal, MaskIn } from "./ui/Reveal";
+import Ornament from "./Ornament";
+import { VideoFigure } from "./VideoReel";
+import { CORPORATE, CIDCO_VIDEO } from "@/content";
+
+// Brand work spotlight: the CIDCO homes ad film Noorr modelled in. Kept about Noorr's role, not about CIDCO itself.
+export function CidcoFeature() {
+  return (
+    <section className="sec-sky py-24 md:py-32" aria-label="Featured for CIDCO">
+      <div className="wrap">
+        <Reveal className="flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur px-4 py-2 text-sm font-semibold text-[var(--fg)] ring-1 ring-black/5 shadow-[0_10px_30px_-15px_rgba(242,106,27,0.6)]">
+            <Star size={15} className="text-[var(--accent)]" fill="currentColor" aria-hidden="true" /> Featured for CIDCO
+          </span>
+        </Reveal>
+        <h2 className="f-display text-center text-[clamp(2.4rem,4.6vw,4.2rem)] leading-[1.02] mt-6 max-w-[20ch] mx-auto">
+          <MaskIn>The face of CIDCO&apos;s new homes</MaskIn>
+        </h2>
+        <Reveal delay={0.05}>
+          <p className="text-lg text-[var(--body)] leading-relaxed mt-5 max-w-[60ch] mx-auto text-center">
+            In November 2022 Noorr was the lead model in CIDCO&apos;s ad film for its flats in Ghansoli, Navi Mumbai: drone shots of
+            the new towers, and Noorr bringing the idea of a first home to life on camera.
+          </p>
+        </Reveal>
+
+        <Reveal className="mt-14 max-w-[960px] mx-auto">
+          <VideoFigure video={CIDCO_VIDEO} aspect="aspect-video" />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+// What clients can book, as numbered text cards (no photos), each with its own enquiry link.
+// Five cards sit as two wide over three narrow; six as two rows of three. /weddings passes its own items and service.
+export function CorporateOfferings({ items = CORPORATE, title = "Five ways to get your team dancing", service = "Corporate show", light = false }) {
+  const span = (i) => (items.length === 5 ? (i < 2 ? "lg:col-span-3" : "lg:col-span-2") : "lg:col-span-2");
+  return (
+    <section className={`${light ? "sec-sky" : "sec-peach"} py-24 md:py-32`} aria-label={title}>
+      <div className="wrap">
+        <div className="text-center">
+          <Ornament className="w-28 text-[#f08a4b] mx-auto" />
+          <p className="kicker mt-5">What you can book</p>
+          <h2 className="f-display text-[clamp(2.4rem,4.4vw,4rem)] leading-[1.02] mt-4">
+            <MaskIn>{title}</MaskIn>
+          </h2>
+        </div>
+        <ul className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5">
+          {items.map((c, i) => (
+            <li key={c.title} className={`list-none ${span(i)}`}>
+              <Reveal delay={(i % 3) * 0.06} className="group h-full card-grad p-7 md:p-8 flex flex-col transition-transform duration-500 hover:-translate-y-1">
+                <span className="f-display text-[3.2rem] leading-none text-grad">0{i + 1}</span>
+                <h3 className="f-display text-[1.75rem] leading-tight mt-5">{c.title}</h3>
+                <p className="text-[var(--body)] leading-relaxed mt-3 flex-1">{c.body}</p>
+                <Link
+                  href={`/contact?service=${encodeURIComponent(service)}&topic=${encodeURIComponent(c.title)}`}
+                  className="inline-flex items-center gap-2 mt-6 font-semibold text-[var(--accent)] hover:text-[var(--fg)] transition-colors"
+                >
+                  Enquire <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const CORPORATE_STEPS = [
+  ["Tell us the occasion", "Annual day, award night, wellness week or festival party, plus the date and how many people."],
+  ["Noorr plans the routine", "A style and song that suit the room, simple enough for first-timers to learn."],
+  ["Rehearsals at your office", "Short sessions that fit around work, until the team is confident."],
+  ["Showtime", "Your team on stage, and the rest of the office on its feet."],
+];
+
+// How a booking runs, in four plain steps. /weddings passes its own steps and button.
+export function CorporateProcess({ steps = CORPORATE_STEPS, cta = { href: "/contact?service=Corporate%20show", label: "Plan a corporate show" }, light = true }) {
+  return (
+    <section className={`${light ? "sec-sky" : "sec-peach"} py-24 md:py-32`} aria-label="How it works">
+      <div className="wrap">
+        <p className="kicker">How it works</p>
+        <h2 className="f-display text-[clamp(2.4rem,4.4vw,4rem)] leading-[1.02] mt-4 max-w-[18ch]">
+          <MaskIn>From first call to curtain call</MaskIn>
+        </h2>
+        <ol className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {steps.map(([t, b], i) => (
+            <li key={t} className="list-none">
+              <Reveal delay={i * 0.07} className="relative h-full pt-8">
+                <div className="rule-grad" />
+                <span className="absolute top-0 left-0 grid place-items-center w-9 h-9 -translate-y-1/2 mt-8 rounded-full bg-[var(--fg)] text-white text-sm font-semibold tabular">
+                  {i + 1}
+                </span>
+                <h3 className="f-display text-2xl mt-8">{t}</h3>
+                <p className="text-[var(--body)] mt-2 leading-relaxed">{b}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+        <Reveal className="mt-14">
+          <Link href={cta.href} className="btn-primary">
+            {cta.label}
+          </Link>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

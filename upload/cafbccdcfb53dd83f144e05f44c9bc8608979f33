@@ -1,0 +1,40 @@
+import { Reveal } from "./ui/Reveal";
+import { SCREENED, STAR_PHOTOS } from "@/content";
+
+// Honeycomb wall, the hexagon motif from Noorr's own profile.
+export default function Filmography() {
+  const rows = [STAR_PHOTOS.slice(0, 7), STAR_PHOTOS.slice(7, 13), STAR_PHOTOS.slice(13, 20)];
+  return (
+    <section className="stage-light py-24 md:py-32 overflow-hidden">
+      <div className="wrap">
+        <Reveal>
+          <h2 className="f-display text-[clamp(2.6rem,5.5vw,5rem)] leading-[0.92]">Screened with the stars</h2>
+          <p className="text-lg text-[#6B7080] mt-5 max-w-[50ch]">On sets, award nights and television stages across film and TV.</p>
+        </Reveal>
+      </div>
+
+      <Reveal className="mt-14 flex flex-col items-center">
+        {rows.map((row, r) => (
+          <div key={r} className={`flex gap-2 md:gap-3 ${r ? "-mt-[22px] md:-mt-[34px]" : ""}`}>
+            {row.map((src) => (
+              <div key={src} className="hex shrink-0 w-[110px] sm:w-[150px] md:w-[200px] aspect-[1.15/1] overflow-hidden bg-[#ffffff] grayscale-[35%] hover:grayscale-0 transition-[filter] duration-500">
+                <img src={src} alt="Noorr Khan with a film or television star" loading="lazy" className="w-full h-full object-cover scale-[1.14]" />
+              </div>
+            ))}
+          </div>
+        ))}
+      </Reveal>
+
+      <div className="wrap mt-16">
+        <ul className="surface p-6 md:p-8 columns-1 sm:columns-2 lg:columns-3 gap-10">
+          {SCREENED.map(([who, what]) => (
+            <li key={who} className="break-inside-avoid py-2.5 flex items-baseline justify-between gap-4">
+              <span className="font-semibold">{who}</span>
+              <span className="text-[#6B7080] text-right text-[0.95rem]">{what}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
