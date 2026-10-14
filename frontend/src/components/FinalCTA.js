@@ -7,7 +7,7 @@ import { CONTACT } from "@/content";
 // Closes every page: one dark card with a glow rising from below, like a stage before the curtain.
 export default function FinalCTA() {
   return (
-    <section className="sec-sky py-20 md:py-28" aria-label="Book Noor">
+    <section className="sec-sky py-20 md:py-28" aria-label="Book Noorr">
       <Reveal className="wrap">
         <div className="tone-ink card-night relative overflow-hidden rounded-[28px] px-6 py-20 md:py-28 text-center">
           <div
@@ -22,12 +22,12 @@ export default function FinalCTA() {
             <Ornament className="w-28 text-white/80" />
             <h2 className="f-display text-[clamp(2.4rem,5vw,4.4rem)] leading-[1.02] mt-6 max-w-[16ch]">Let&apos;s talk about your show</h2>
             <p className="text-lg text-[var(--body)] mt-5 max-w-[48ch]">
-              A school annual day, a college fest, a workshop or an office performance. Tell Noor what you have in mind and his team
+              A school annual day, a college fest, a workshop or an office performance. Tell Noorr what you have in mind and his team
               will call you back.
             </p>
             <div className="flex flex-wrap justify-center gap-3 mt-10">
               <Link href="/contact" className="btn-ghost !bg-white !text-[#15172a]">
-                Book Noor
+                Book Noorr
               </Link>
               <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className="btn-ghost !bg-white/10 !text-white !border-white/25">
                 <MessageCircle size={18} aria-hidden="true" /> WhatsApp

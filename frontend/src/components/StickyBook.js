@@ -24,7 +24,7 @@ export default function StickyBook() {
           <MessageCircle size={16} className="text-[#25d366]" /> Chat
         </a>
         <Link href="/contact" className="rounded-md bg-[#15172A] text-[#FFFFFF] font-bold py-3 flex items-center justify-center">
-          Book Noor
+          Book Noorr
         </Link>
       </div>
     </div>

@@ -86,6 +86,14 @@ android-sdk/
 .env
 .env.*
 *.env
+!.env.example
 credentials.json
 *.key
 .credentials
+
+# Raw source photos and working folders (not used by the live site)
+/drive-originals/
+/media-backup/
+/chatgpt-enhance/
+/hero-cutouts/
+/website-images/

@@ -2,12 +2,13 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal, Frame } from "./ui/Reveal";
 import Ornament from "./Ornament";
+import { M } from "@/content";
 
 const PAGES = [
-  { href: "/about", title: "About Noor", line: "His story, the years with Ganesh Acharya and the eight styles he teaches.", img: "/media/stage-act.webp" },
-  { href: "/films", title: "Films and screen", line: "60+ movies and video albums, the stars and the character work.", img: "/media/film-ramleela.webp" },
-  { href: "/stage", title: "Stage and judging", line: "Workshops, annual days, corporate shows, competitions and awards.", img: "/media/workshop-3.webp" },
-  { href: "/programs", title: "School programs", line: "Year-long classes, annual days, festivals and competition training.", img: "/media/annual-7.webp" },
+  { href: "/about", title: "About Noorr", line: "His story, his journey from film sets to brand work and the eight styles he teaches.", img: M("portrait"), focus: "50% 25%" },
+  { href: "/films", title: "Films and screen", line: "60+ movies and video albums, the stars and the character work.", img: M("film-ramleela") },
+  { href: "/stage", title: "Stage and judging", line: "Workshops, annual days, corporate shows, competitions and awards.", img: M("workshop-3") },
+  { href: "/programs", title: "School programs", line: "Year-long classes, annual days, festivals and competition training.", img: M("annual-7") },
 ];
 
 // Four doors into the rest of the site.
@@ -25,7 +26,7 @@ export default function PageIndex() {
             <li key={p.href}>
               <Reveal delay={(i % 2) * 0.08}>
                 <Link href={p.href} className="group block card-grad p-3 pb-6 transition-transform duration-500 hover:-translate-y-1">
-                  <Frame src={p.img} className="aspect-[16/10] !rounded-[16px]" />
+                  <Frame src={p.img} focus={p.focus} className="aspect-[16/10] !rounded-[16px]" />
                   <span className="flex items-start justify-between gap-6 mt-5 px-3">
                     <span>
                       <span className="block f-display text-3xl leading-tight">{p.title}</span>

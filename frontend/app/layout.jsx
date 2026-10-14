@@ -10,66 +10,62 @@ const hand = Parisienne({ subsets: ["latin"], weight: "400", variable: "--font-h
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const DESCRIPTION =
-  "Bollywood choreographer working with Ganesh Acharya since 2011. 55K+ students trained, 60+ films and albums. Founder of Dance Desire and NR Institute of Dance.";
+  "Bollywood choreographer working on film sets with leading choreographers since 2011. 55K+ students trained, 60+ films and albums. Founder of NR Institute of Dance.";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Noor Khan | Dance Choreographer and Celebrity Trainer",
-    template: "%s | Noor Khan",
+    default: "Noorr Khan | Dance Choreographer and Celebrity Trainer",
+    template: "%s | Noorr Khan",
   },
   description: DESCRIPTION,
   keywords: [
-    "Noor Khan choreographer",
+    "Noorr Khan choreographer",
     "dance choreographer Navi Mumbai",
     "Bollywood choreographer",
     "school annual day choreography",
     "college dance choreography",
     "corporate dance workshop",
-    "Dance Desire",
     "NR Institute of Dance",
   ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    siteName: "Noor Khan",
-    title: "Noor Khan | Dance Choreographer",
+    siteName: "Noorr Khan",
+    title: "Noorr Khan | Dance Choreographer",
     description: "Where anyone can dance. Workshops, school programs, corporate shows and film choreography.",
-    images: [{ url: "/media/stage-pose.webp", alt: "Noor Khan on stage" }],
+    images: [{ url: "/media/stage-pose.webp", alt: "Noorr Khan on stage" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Noor Khan | Dance Choreographer",
+    title: "Noorr Khan | Dance Choreographer",
     description: "Where anyone can dance. Workshops, school programs, corporate shows and film choreography.",
     images: ["/media/stage-pose.webp"],
   },
   robots: { index: true, follow: true },
 };
 
-// Structured data so search engines can show Noor as a person with a bookable dance service.
+// Structured data so search engines can show Noorr as a person with a bookable dance service.
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#noor`,
-      name: "Noor Khan",
+      name: "Noorr Khan",
       jobTitle: "Dance Choreographer and Celebrity Trainer",
       url: SITE_URL,
       image: `${SITE_URL}/media/portrait.webp`,
       email: "choreographernoorkhan@gmail.com",
       telephone: "+91-9167439223",
       address: { "@type": "PostalAddress", addressLocality: "Navi Mumbai", addressRegion: "Maharashtra", addressCountry: "IN" },
-      sameAs: ["https://instagram.com/noorkhaanofficial", "https://facebook.com/noordanceislife"],
-      founder: [
-        { "@type": "Organization", name: "Dance Desire" },
-        { "@type": "Organization", name: "NR Institute of Dance" },
-      ],
+      sameAs: ["https://instagram.com/noorkhaanofficial", "https://facebook.com/noordanceislife", "https://www.linkedin.com/in/noorr-khan-81bab2443/"],
+      founder: [{ "@type": "Organization", name: "NR Institute of Dance" }],
     },
     {
       "@type": "ProfessionalService",
-      name: "Noor Khan Choreography",
+      name: "Noorr Khan Choreography",
       url: SITE_URL,
       image: `${SITE_URL}/media/stage-pose.webp`,
       telephone: "+91-9167439223",

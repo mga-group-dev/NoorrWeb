@@ -7,22 +7,32 @@ import PageIndex from "@/components/PageIndex";
 import { WhatHeDoes, JourneyLine, StarsReel, Recognition } from "@/components/HomeSections";
 import EightCount from "@/components/EightCount";
 import FinalCTA from "@/components/FinalCTA";
+import VideoReel from "@/components/VideoReel";
+import { HOME_VIDEOS } from "@/content";
 
 export default function Home() {
   return (
     <main id="main">
       <Hero />
       <Stats />
-      <OrnamentBand>Where anyone can dance.</OrnamentBand>
+      <OrnamentBand img="/media/drive/img-1514.webp" focus="50% 45%" cta={{ href: "/contact", label: "Bring Noorr to your stage" }}>
+        Where anyone can dance.
+      </OrnamentBand>
       <AboutStory
         light
         action={
           <Link href="/about" className="link-arrow">
-            Read Noor&apos;s story <span aria-hidden="true">&rarr;</span>
+            Read Noorr&apos;s story <span aria-hidden="true">&rarr;</span>
           </Link>
         }
       />
       <WhatHeDoes />
+      <VideoReel
+        kicker="Watch"
+        title="See it on stage"
+        lead="Annual days, showstopper entries and a Kantara character look. Tap any video to watch it with sound."
+        videos={HOME_VIDEOS}
+      />
       <JourneyLine />
       <EightCount />
       <StarsReel />

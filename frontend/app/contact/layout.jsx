@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Book Noor",
+  title: "Book Noorr",
   description:
-    "Book Noor Khan for school annual days, college fests, corporate shows, dance workshops and film choreography. Call, WhatsApp or send an enquiry.",
+    "Book Noorr Khan for school annual days, college fests, corporate shows, dance workshops and film choreography. Call, WhatsApp or send an enquiry.",
   alternates: { canonical: "/contact" },
 };
 

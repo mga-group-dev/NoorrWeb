@@ -12,14 +12,14 @@ export default function NotFound() {
         <span className="eyebrow">Wrong step</span>
         <h1 className="f-display text-[clamp(2.8rem,6vw,5rem)] leading-[1] mt-3 max-w-[16ch] mx-auto">This page missed its cue.</h1>
         <p className="text-lg text-[var(--body)] mt-6 max-w-[48ch] mx-auto">
-          The link may be old or mistyped. Head back to the home page, or tell Noor about your event directly.
+          The link may be old or mistyped. Head back to the home page, or tell Noorr about your event directly.
         </p>
         <div className="flex flex-wrap justify-center items-center gap-5 mt-9">
           <Link href="/" className="btn-primary">
             Back to home
           </Link>
           <Link href="/contact" className="link-arrow">
-            Book Noor <span aria-hidden="true">&rarr;</span>
+            Book Noorr <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
       </div>

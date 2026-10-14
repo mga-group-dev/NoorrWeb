@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import { focusOf, srcSetOf } from "@/content";
+import { useOverCrop } from "./SmartImg";
 
 export const EASE = [0.22, 1, 0.36, 1];
 
@@ -76,12 +78,34 @@ export const Counter = ({ value, suffix = "", className = "" }) => {
 };
 
 // A wide cinematic frame. The image starts slightly zoomed and settles as it scrolls into view.
-export const Frame = ({ src, alt = "", className = "", priority = false, focus = "50% 50%" }) => {
+// `sizes` tells the browser how wide the frame shows, so it picks the 800px copy where that is enough.
+// `contain` shows the whole photo (for wide shots like a trophy in a tall card) over a soft blurred copy of itself.
+// Without `contain`, it switches to that mode by itself when filling the frame would crop the photo badly.
+export const Frame = ({ src, alt = "", className = "", priority = false, focus, sizes = "(max-width: 1024px) 100vw, 50vw", contain: forced = false }) => {
+  focus = focus || focusOf(src, "50% 50%");
   const ref = useRef(null);
+  const imgRef = useRef(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
+  const over = useOverCrop(imgRef, src);
+  const contain = forced || over;
+  const srcSet = srcSetOf(src);
   return (
     <div ref={ref} className={`frame ${inView ? "is-in" : ""} ${className}`}>
-      <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} decoding="async" style={{ objectPosition: focus }} />
+      {contain && (
+        <img src={src} srcSet={srcSet} sizes={sizes} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 blur-2xl opacity-60 scale-125" />
+      )}
+      <img
+        ref={imgRef}
+        src={src}
+        srcSet={srcSet}
+        sizes={sizes}
+        alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+        className={contain ? "relative" : undefined}
+        style={contain ? { objectFit: "contain" } : { objectPosition: focus }}
+      />
     </div>
   );
 };

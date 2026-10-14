@@ -2,7 +2,8 @@
 import { useRef, useState } from "react";
 import { motion, useScroll, useMotionValueEvent, useSpring, AnimatePresence } from "framer-motion";
 import Ornament from "./Ornament";
-import { EIGHT_COUNT } from "@/content";
+import SmartImg from "./ui/SmartImg";
+import { EIGHT_COUNT, focusOf, srcSetOf } from "@/content";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -40,7 +41,7 @@ export default function EightCount() {
         <AnimatePresence initial={false}>
           <motion.img
             key={cur.img}
-            src={cur.img}
+            src={srcSetOf(cur.img) ? cur.img.replace(/\.webp$/, ".800.webp") : cur.img}
             alt=""
             className="absolute inset-0 w-full h-full object-cover scale-125 blur-[60px]"
             initial={{ opacity: 0 }}
@@ -108,7 +109,7 @@ export default function EightCount() {
                   transition={{ duration: 0.8, ease: EASE }}
                 >
                   <div className="relative w-full h-full overflow-hidden rounded-[16px]">
-                    <img src={c.img} alt="" loading={i < 3 ? "eager" : "lazy"} className="w-full h-full object-cover object-[50%_25%]" />
+                    <SmartImg src={c.img} srcSet={srcSetOf(c.img)} sizes="(max-width: 1024px) 80vw, 420px" alt="" loading={i < 3 ? "eager" : "lazy"} className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: focusOf(c.img, "50% 25%") }} />
                     <span className="absolute left-3 bottom-3 rounded-full bg-black/45 backdrop-blur px-3 py-1 text-xs tabular">
                       {String(i + 1).padStart(2, "0")} · {c.style}
                     </span>

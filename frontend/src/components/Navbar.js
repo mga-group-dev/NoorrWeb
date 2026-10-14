@@ -6,22 +6,21 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { NAV } from "@/constants/testIds";
+import { getLenis } from "@/hooks/useLenis";
 
+// `short` is the label in the desktop pill, where nine links have to fit on one line.
 export const LINKS = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Films", href: "/films" },
   { label: "Stage", href: "/stage" },
-  { label: "Programs", href: "/programs" },
+  { label: "Weddings and Sangeet", short: "Weddings & Sangeet", href: "/weddings" },
+  { label: "For Corporate", short: "Corporate", href: "/corporate" },
+  { label: "For Schools and Colleges", short: "Schools & Colleges", href: "/schools-colleges" },
+  { label: "Judge and Jury", short: "Judge & Jury", href: "/judge-jury" },
+  { label: "Awards and Recognition", short: "Awards", href: "/awards" },
   { label: "Contact", href: "/contact" },
 ];
-
-export const LogoMark = ({ size = 34 }) => (
-  <span
-    className="inline-block rounded-full"
-    style={{ width: size * 0.6, height: size * 0.6, background: "radial-gradient(circle at 35% 30%, #ffd2b3, #f26a1b 55%, #8fa2ee)" }}
-    aria-hidden="true"
-  />
-);
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -33,6 +32,18 @@ export default function Navbar() {
   useMotionValueEvent(scrollY, "change", (y) => setSolid(y > 60));
   useEffect(() => setOpen(false), [pathname]);
 
+  // Freeze the page behind the open menu so a swipe scrolls the menu, not the page.
+  useEffect(() => {
+    if (!open) return;
+    const lenis = getLenis();
+    lenis?.stop();
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      lenis?.start();
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <>
       <header
@@ -41,37 +52,51 @@ export default function Navbar() {
           solid ? "bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-black/10" : "bg-transparent"
         }`}
       >
-        <div className="wrap h-[68px] flex items-center justify-between">
-          <Link href="/" data-testid="nav-logo-home-btn" className="flex items-center gap-3" aria-label="Noor Khan, home">
-            <LogoMark />
-            <span className="f-display text-2xl text-[#15172A]">Noor Khan</span>
+        <div className="wrap h-[68px] flex items-center justify-between gap-4">
+          <Link href="/" data-testid="nav-logo-home-btn" className="flex items-center justify-self-start" aria-label="Noorr Khan, home">
+            <span className="font-extrabold text-[1.6rem] md:text-[1.9rem] leading-none tracking-[-0.03em] text-[#15172A]">Noorr Khan</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Main">
+          {/* iOS-style segmented control: links in a frosted pill, with a white highlight that glides to the current page. */}
+          <nav
+            className="relative hidden xl:flex items-center gap-0.5 p-1 rounded-full bg-white border border-black/[0.06] shadow-[0_10px_40px_-14px_rgba(21,23,42,0.28)]"
+            aria-label="Main"
+          >
             {LINKS.filter((l) => l.href !== "/contact").map((l) => {
               const active = pathname === l.href;
               return (
                 <Link
                   key={l.href}
                   href={l.href}
-                  data-testid={`nav-link-${l.href.slice(1)}`}
+                  data-testid={`nav-link-${l.href.slice(1) || "home"}`}
                   aria-current={active ? "page" : undefined}
-                  className={`text-[15px] font-medium transition-colors underline-offset-8 decoration-2 decoration-[#15172A] ${
-                    active ? "text-[#15172A] underline" : "text-[#15172A]/70 hover:text-[#15172A]"
+                  className={`relative whitespace-nowrap rounded-full px-3 py-2 text-[14px] font-medium transition-colors duration-200 ${
+                    active ? "text-[#c2410c]" : "text-[#15172A]/70 hover:text-[#f26a1b] hover:bg-[#fff1e6]"
                   }`}
                 >
-                  {l.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-full bg-[#fff1e6] ring-1 ring-[#f26a1b]/25"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <span className="relative">{l.short || l.label}</span>
                 </Link>
               );
             })}
-            <Link href="/contact" data-testid={NAV.bookBtn} className="btn-primary !py-2.5 !px-5 !text-sm">
-              Book Noor
-            </Link>
           </nav>
+          {/* Wrapper does the layout: .btn-primary sets its own display, which would override hidden/justify utilities. */}
+          <div className="hidden xl:flex justify-end shrink-0">
+            <Link href="/contact" data-testid={NAV.bookBtn} className="btn-primary !py-2.5 !px-5 !text-sm whitespace-nowrap">
+              Book Noorr
+            </Link>
+          </div>
 
           <button
             data-testid={NAV.mobileMenuBtn}
-            className="lg:hidden text-[#15172A] p-2 -mr-2"
+            className="xl:hidden text-[#15172A] p-2 -mr-2"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -90,7 +115,7 @@ export default function Navbar() {
         {open && (
           <motion.div
             data-testid={NAV.mobileMenu}
-            className="fixed inset-0 z-40 bg-[#FFFFFF]/97 backdrop-blur-xl flex flex-col justify-center px-6"
+            className="fixed inset-0 z-40 bg-[#FFFFFF]/97 backdrop-blur-xl flex flex-col justify-start [@media(min-height:760px)]:justify-center px-6 pt-24 pb-8 overflow-y-auto overscroll-contain"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -106,15 +131,15 @@ export default function Navbar() {
                   <Link
                     href={l.href}
                     aria-current={pathname === l.href ? "page" : undefined}
-                    className={`f-display text-5xl py-1.5 block ${pathname === l.href ? "text-[#15172A]" : "text-[#15172A] hover:text-[#15172A]"}`}
+                    className={`f-display text-[clamp(1.6rem,7vw,2.75rem)] leading-tight py-1.5 block ${pathname === l.href ? "text-[#15172A]" : "text-[#15172A] hover:text-[#15172A]"}`}
                   >
                     {l.label}
                   </Link>
                 </motion.div>
               </div>
             ))}
-            <Link href="/contact" className="btn-primary self-start mt-10" data-testid="nav-mobile-book-link">
-              Book Noor
+            <Link href="/contact" className="btn-primary self-start mt-8 shrink-0" data-testid="nav-mobile-book-link">
+              Book Noorr
             </Link>
           </motion.div>
         )}

@@ -3,14 +3,34 @@ import Ornament from "./Ornament";
 
 // The shared section: copy on one side, one tall frame on the other.
 // `light` sections are white, the rest a faint warm grey; `flip` swaps the sides.
-export default function Split({ id, kicker, title, img, alt, flip = false, light = false, action, children }) {
+// `cutout` is a transparent image shown free-standing over a soft glow instead of in a frame.
+// `figure` replaces the photo side entirely (for sections whose image changes, like Styles).
+export default function Split({ id, kicker, title, img, alt, cutout, figure, flip = false, light = false, action, children }) {
   return (
     <section id={id} className={`${light ? "sec-sky" : "sec-peach"} py-24 md:py-32`}>
       <div className="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
         <Reveal className={`w-full ${flip ? "lg:order-last" : ""}`}>
-          <div className="card-grad p-3">
-            <Frame src={img} alt={alt} className="aspect-[4/5] max-h-[720px] !rounded-[16px]" />
-          </div>
+          {figure ? (
+            figure
+          ) : cutout ? (
+            <div className="relative h-[clamp(460px,80vh,780px)]">
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-[6%] top-[12%] bottom-[4%] rounded-full blur-3xl opacity-80 bg-[radial-gradient(circle_at_50%_40%,rgba(242,106,27,0.45),rgba(185,198,247,0.45)_55%,transparent_75%)]"
+              />
+              <img
+                src={cutout}
+                alt={alt}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-contain object-bottom drop-shadow-[0_30px_40px_rgba(21,23,42,0.25)] [mask-image:linear-gradient(to_bottom,#000_88%,transparent)]"
+              />
+            </div>
+          ) : (
+            <div className="card-grad p-3">
+              <Frame src={img} alt={alt} className="aspect-[4/5] max-h-[720px] !rounded-[16px]" />
+            </div>
+          )}
         </Reveal>
         <Reveal delay={0.08}>
           <Ornament className="w-24 text-[#f08a4b] mb-5" />

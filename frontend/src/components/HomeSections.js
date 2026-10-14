@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal, Frame } from "./ui/Reveal";
+import SmartImg from "./ui/SmartImg";
 import Ornament from "./Ornament";
-import { STAGE_CHAPTERS, JOURNEY, CREDITS, STYLES, AWARDS } from "@/content";
+import JourneyTimeline from "./JourneyTimeline";
+import { STAGE_CHAPTERS, CREDITS, AWARDS, focusOf, srcSetOf } from "@/content";
 
 // Shared centred heading: ornament, small label, display title, optional lead.
 function Head({ kicker, title, children }) {
@@ -16,34 +18,51 @@ function Head({ kicker, title, children }) {
   );
 }
 
-// Four kinds of work as a bento grid: one large card, three smaller ones.
+// Four kinds of work as full-bleed photo cards in an alternating wide/narrow bento. Each card opens its page;
+// on hover the photo slowly zooms and the full description slides up.
 export function WhatHeDoes() {
-  const [first, ...rest] = STAGE_CHAPTERS;
+  const spans = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
   return (
-    <section className="sec-sky py-24 md:py-32" aria-label="What Noor does">
+    <section className="sec-sky py-24 md:py-32" aria-label="What Noorr does">
       <div className="wrap">
-        <Head kicker="What Noor does" title="One choreographer, every kind of stage">
+        <Head kicker="What Noorr does" title="One choreographer, every kind of stage">
           From a classroom of first-timers to a corporate gala, the routine is built for the room in front of him.
         </Head>
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <Reveal className="card-grad p-3 flex flex-col">
-            <Frame src={first.imgs[0]} className="aspect-[4/3] lg:aspect-auto lg:flex-1 lg:min-h-[420px] !rounded-[16px]" />
-            <div className="px-4 pt-6 pb-4">
-              <h3 className="f-display text-3xl">{first.title}</h3>
-              <p className="text-[var(--body)] mt-2 max-w-[52ch]">{first.body}</p>
-            </div>
-          </Reveal>
-          <div className="grid gap-5">
-            {rest.map((c, i) => (
-              <Reveal key={c.title} delay={0.08 * (i + 1)} className="card-grad p-3 grid grid-cols-[120px_1fr] sm:grid-cols-[180px_1fr] gap-5 items-center">
-                <Frame src={c.imgs[0]} className="aspect-square !rounded-[14px]" />
-                <div className="pr-3">
-                  <h3 className="f-display text-2xl leading-tight">{c.title}</h3>
-                  <p className="text-[var(--body)] text-[0.95rem] mt-1.5 line-clamp-3">{c.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {STAGE_CHAPTERS.map((c, i) => (
+            <Reveal key={c.title} delay={(i % 2) * 0.08} className={spans[i]}>
+              <Link
+                href={c.href}
+                className="group relative block h-[380px] md:h-[460px] overflow-hidden rounded-[22px] bg-[#15172a] shadow-[0_30px_60px_-35px_rgba(21,23,42,0.65)] ring-1 ring-black/5"
+              >
+                <SmartImg
+                  src={c.cover}
+                  srcSet={srcSetOf(c.cover)}
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-[1.07]"
+                  style={{ objectPosition: focusOf(c.cover) }}
+                />
+                <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#0b0c16]/95 via-[#0b0c16]/55 md:from-[#0b0c16]/90 md:via-[#0b0c16]/25 to-transparent" />
+                <span className="absolute top-5 left-5 rounded-full bg-white/15 backdrop-blur-md px-3 py-1 text-xs font-medium tracking-[0.14em] uppercase text-white/90 tabular">
+                  0{i + 1}
+                </span>
+                <span className="absolute inset-x-0 bottom-0 p-5 md:p-8 text-white">
+                  <span className="flex items-end justify-between gap-4 md:gap-6">
+                    <span>
+                      <span className="block f-display text-[clamp(1.9rem,3vw,2.6rem)] leading-[1.05]">{c.title}</span>
+                      <span className="block text-white/80 mt-3 max-w-[48ch] leading-relaxed line-clamp-3 md:line-clamp-2 md:group-hover:line-clamp-none">{c.body}</span>
+                    </span>
+                    <span aria-hidden="true" className="shrink-0 grid place-items-center w-12 h-12 rounded-full bg-white text-[#15172a] transition-transform duration-500 group-hover:-rotate-45 group-hover:scale-110">
+                      <ArrowUpRight size={20} className="rotate-45" />
+                    </span>
+                  </span>
+                </span>
+              </Link>
+            </Reveal>
+          ))}
         </div>
         <Reveal className="text-center mt-10">
           <Link href="/stage" className="link-arrow">
@@ -55,33 +74,23 @@ export function WhatHeDoes() {
   );
 }
 
-// The years with Ganesh Acharya, laid out along a gradient line.
-export function JourneyLine() {
+// Noorr's career, film sets to brand work, as an interactive timeline.
+export function JourneyLine({ light = false }) {
   return (
-    <section className="sec-peach py-24 md:py-32 overflow-hidden" aria-label="Journey">
+    <section className={`${light ? "sec-sky" : "sec-peach"} py-24 md:py-32 overflow-hidden`} aria-label="Noorr's journey">
       <div className="wrap">
-        <Head kicker="With Ganesh Acharya since 2011" title="A decade on Bollywood sets" />
-        <ol className="relative mt-16 grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-5">
-          <span aria-hidden="true" className="hidden md:block absolute left-0 right-0 top-[7px] rule-grad" />
-          {JOURNEY.map((j, i) => (
-            <li key={j.year} className="list-none relative">
-              <Reveal delay={i * 0.08}>
-                <span aria-hidden="true" className="block w-[15px] h-[15px] rounded-full bg-gradient-to-br from-[#f6a26c] to-[#8f9df0] ring-4 ring-white shadow" />
-                <p className="f-display text-4xl text-grad mt-5 tabular">{j.year}</p>
-                <p className="text-[var(--fg)] mt-1">{j.title}</p>
-                <div className="card-grad p-2 mt-4">
-                  <Frame src={j.img} alt={`Noor Khan, ${j.year}: ${j.title}`} className="aspect-[4/5] !rounded-[12px]" />
-                </div>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+        <Head kicker="Since 2011" title="Noorr's journey">
+          From a dancer on Bollywood sets to an award-winning choreographer, competition judge and the face of a brand campaign.
+        </Head>
+        <Reveal>
+          <JourneyTimeline />
+        </Reveal>
       </div>
     </section>
   );
 }
 
-// Star credits drifting past like an end roll, then the eight styles.
+// Star credits drifting past like an end roll.
 export function StarsReel() {
   const row = [...CREDITS, ...CREDITS];
   return (
@@ -98,29 +107,35 @@ export function StarsReel() {
           </li>
         ))}
       </ul>
-      <div aria-hidden="true" className="mt-14 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-        <div className="reel-track gap-4">
+      {/* Tall poster cards: the photo fills the card and the name sits on it like a film credit. Hovering pauses the roll. */}
+      <div aria-hidden="true" className="group/reel mt-14 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
+        <div className="reel-track gap-5 py-4 group-hover/reel:[animation-play-state:paused]">
           {row.map((c, i) => (
-            <div key={i} className="card-grad shrink-0 w-[260px] p-2 pb-4">
-              <div className="aspect-[4/3] overflow-hidden rounded-[14px]">
-                <img src={c.img} alt="" loading="lazy" className="w-full h-full object-cover" />
-              </div>
-              <p className="f-display text-2xl mt-3 px-2">{c.star}</p>
-              <p className="text-sm text-[var(--muted)] px-2">{c.work}</p>
+            <div
+              key={i}
+              className="group relative shrink-0 w-[250px] md:w-[280px] aspect-[3/4] overflow-hidden rounded-[22px] bg-[#15172a] ring-1 ring-black/5 shadow-[0_30px_50px_-30px_rgba(21,23,42,0.6)] transition-transform duration-500 hover:-translate-y-2"
+            >
+              <SmartImg
+                src={c.img}
+                srcSet={srcSetOf(c.img)}
+                sizes="280px"
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.07]"
+                style={{ objectPosition: focusOf(c.img) }}
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-[#0b0c16]/90 via-[#0b0c16]/15 to-transparent" />
+              <span className="absolute top-4 left-4 rounded-full bg-white/85 backdrop-blur px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#15172a]">
+                {c.work}
+              </span>
+              <span className="absolute left-5 right-5 bottom-5">
+                <span className="block text-xs uppercase tracking-[0.2em] text-white/60">{c.star.startsWith("Featured in ") ? "Featured in" : "With"}</span>
+                <span className="block f-display text-[2rem] leading-[1.05] text-white mt-1">{c.star.replace("Featured in ", "")}</span>
+              </span>
             </div>
           ))}
         </div>
       </div>
-      <Reveal className="wrap mt-16 flex flex-col items-center">
-        <p className="kicker">Eight styles</p>
-        <ul className="flex flex-wrap justify-center gap-2.5 mt-5 max-w-[760px]">
-          {STYLES.map((s, i) => (
-            <li key={s} className={`rounded-full px-4 py-1.5 ${i === 0 ? "bg-[#15172A] text-white" : "chip-grad"}`}>
-              {s}
-            </li>
-          ))}
-        </ul>
-      </Reveal>
     </section>
   );
 }
@@ -131,11 +146,11 @@ export function Recognition() {
     <section className="sec-sky py-24 md:py-32" aria-label="Recognition">
       <div className="wrap">
         <Head kicker="Recognition" title="Awards and honours" />
-        <ul className="mt-14 grid grid-cols-2 lg:grid-cols-5 gap-4">
+        <ul className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {AWARDS.map((a, i) => (
             <li key={a.title} className="list-none">
               <Reveal delay={i * 0.06} className="card-grad p-2 pb-4 h-full">
-                <Frame src={a.img} alt={a.title} className="aspect-[4/5] !rounded-[14px]" />
+                <Frame src={a.img} alt={a.title} contain={a.contain} sizes="(max-width: 1024px) 50vw, 20vw" className="aspect-[4/5] !rounded-[14px]" />
                 <p className="font-medium text-[var(--fg)] mt-3 px-2 leading-snug">{a.title}</p>
                 <p className="text-sm text-[var(--muted)] px-2 mt-0.5">{a.by}</p>
               </Reveal>
@@ -143,7 +158,7 @@ export function Recognition() {
           ))}
         </ul>
         <Reveal className="text-center mt-10">
-          <Link href="/stage" className="link-arrow">
+          <Link href="/awards" className="link-arrow">
             Judging and awards <ArrowUpRight size={16} aria-hidden="true" />
           </Link>
         </Reveal>
