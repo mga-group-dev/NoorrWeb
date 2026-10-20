@@ -19,6 +19,7 @@ import {
   STYLES,
   focusOf,
   srcSetOf,
+  blurOf,
   ratioOf,
 } from "@/content";
 
@@ -70,7 +71,7 @@ function SwapFigure({ src, alt, title, line, contain = false }) {
     <div className="card-grad p-3">
       <div className="relative aspect-[4/5] max-h-[720px] w-full overflow-hidden rounded-[16px] bg-[#15172a]">
         {contain && (
-          <img key={`bg-${src}`} src={src} srcSet={srcSetOf(src)} sizes="50vw" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-70" />
+          <img key={`bg-${src}`} src={blurOf(src)} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-70" />
         )}
         <AnimatePresence initial={false}>
           <motion.img

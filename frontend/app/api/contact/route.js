@@ -1,10 +1,12 @@
+import nodemailer from "nodemailer";
 import { CONTACT } from "@/content";
 
-// Contact form → email to Noorr through Resend (https://resend.com). No database or separate backend.
-// Env: RESEND_API_KEY (required), CONTACT_TO_EMAIL (defaults to the public contact address),
-// CONTACT_FROM_EMAIL (a sender on a domain verified in Resend; the default only delivers to the Resend account owner).
+// Contact form → email to Noorr through Gmail (an App Password on the sending Gmail account). No database or separate backend.
+// Env: GMAIL_USER and GMAIL_APP_PASSWORD (required), CONTACT_TO_EMAIL (defaults to the public contact address).
+// The Resend version is kept below, commented out: to switch back, set RESEND_API_KEY / CONTACT_FROM_EMAIL,
+// uncomment the Resend blocks and remove the Gmail ones.
 const TO = process.env.CONTACT_TO_EMAIL || CONTACT.email;
-const FROM = process.env.CONTACT_FROM_EMAIL || "Noorr Khan Website <onboarding@resend.dev>";
+// const FROM = process.env.CONTACT_FROM_EMAIL || "Noorr Khan Website <onboarding@resend.dev>";
 // Must match SERVICES_OPTIONS on the contact page, or the choice is filed as "Other".
 const SERVICES = ["School program", "College event", "Corporate show", "Wedding or sangeet", "Workshop", "Film or celebrity", "Other"];
 
@@ -35,7 +37,11 @@ function validate(body) {
 }
 
 export async function POST(request) {
-  if (!process.env.RESEND_API_KEY) {
+  // Resend:
+  // if (!process.env.RESEND_API_KEY) {
+  //   return Response.json({ error: "Email sending is not set up yet." }, { status: 503 });
+  // }
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
     return Response.json({ error: "Email sending is not set up yet." }, { status: 503 });
   }
 
@@ -76,21 +82,41 @@ export async function POST(request) {
     <p style="font-family:Arial,sans-serif;font-size:12px;color:#6b7080;margin-top:24px">Sent from the contact form on the website. Reply to this email to answer ${escape(form.name)} directly.</p>`;
   const text = `New booking enquiry\n\n${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}\n\n${form.message}`;
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: FROM,
-      to: [TO],
-      reply_to: form.email,
+  // Resend:
+  // const res = await fetch("https://api.resend.com/emails", {
+  //   method: "POST",
+  //   headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+  //   body: JSON.stringify({
+  //     from: FROM,
+  //     to: [TO],
+  //     reply_to: form.email,
+  //     subject: `Booking enquiry: ${form.service} from ${form.name}`,
+  //     html,
+  //     text,
+  //   }),
+  // });
+  // if (!res.ok) {
+  //   const detail = await res.text().catch(() => "");
+  //   console.error("Resend error", res.status, detail);
+  //   return Response.json({ error: "The message could not be sent right now." }, { status: 502 });
+  // }
+  // return Response.json({ ok: true });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD.replace(/\s/g, "") },
+  });
+  try {
+    await transporter.sendMail({
+      from: `"Noorr Khan Website" <${process.env.GMAIL_USER}>`,
+      to: TO,
+      replyTo: form.email,
       subject: `Booking enquiry: ${form.service} from ${form.name}`,
       html,
       text,
-    }),
-  });
-  if (!res.ok) {
-    const detail = await res.text().catch(() => "");
-    console.error("Resend error", res.status, detail);
+    });
+  } catch (err) {
+    console.error("Gmail error", err?.code, err?.message);
     return Response.json({ error: "The message could not be sent right now." }, { status: 502 });
   }
   return Response.json({ ok: true });

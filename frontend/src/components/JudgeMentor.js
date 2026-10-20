@@ -1,6 +1,6 @@
 import { MaskIn, Reveal } from "./ui/Reveal";
 import SmartImg from "./ui/SmartImg";
-import { JUDGING, JUDGE_PHOTOS, NEWSPAPER, AWARDS } from "@/content";
+import { JUDGING, JUDGE_PHOTOS, NEWSPAPER, AWARDS, srcSetOf } from "@/content";
 
 function Group({ g }) {
   return (
@@ -42,7 +42,7 @@ export default function JudgeMentor({ showAwards = true }) {
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-3">
           <Reveal>
             <div className="h-full min-h-[320px] rounded-2xl overflow-hidden bg-[#15172A] p-3 grid place-items-center">
-              <img src={NEWSPAPER} alt="Newspaper feature on Noorr Khan judging a college festival" loading="lazy" className="w-full h-full max-h-[520px] object-contain" />
+              <img src={NEWSPAPER} srcSet={srcSetOf(NEWSPAPER)} sizes="(max-width: 1024px) 92vw, 50vw" decoding="async" alt="Newspaper feature on Noorr Khan judging a college festival" loading="lazy" className="w-full h-full max-h-[520px] object-contain" />
             </div>
           </Reveal>
           <div className="grid grid-rows-2 gap-3 min-h-[420px]">
@@ -73,7 +73,7 @@ export default function JudgeMentor({ showAwards = true }) {
             <Reveal key={a.title} delay={i * 0.06} className="snap-start shrink-0 w-[78vw] sm:w-[340px]">
               <figure>
                 <div className="aspect-[4/5] overflow-hidden rounded-2xl">
-                  <img src={a.img} alt={a.title} loading="lazy" className="w-full h-full object-cover" />
+                  <img src={a.img} srcSet={srcSetOf(a.img)} sizes="(max-width: 1024px) 50vw, 25vw" alt={a.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <figcaption className="mt-4">
                   <p className="text-xl font-semibold">{a.title}</p>

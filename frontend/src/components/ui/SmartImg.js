@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { blurOf } from "@/content";
 
 // Measures a photo against the box it is drawn in. True when filling the box (object-cover) would cut away more than
 // `maxCut` of the photo, e.g. a portrait in a wide card. Re-checks when the image loads or the box resizes.
@@ -35,7 +36,7 @@ export default function SmartImg({ src, alt = "", className = "", style, maxCut 
   return (
     <>
       {over && (
-        <img src={src} srcSet={rest.srcSet} sizes={rest.sizes} alt="" aria-hidden="true" className={`${className} blur-2xl scale-125 opacity-70`} style={{ objectFit: "cover" }} />
+        <img src={blurOf(src)} alt="" aria-hidden="true" decoding="async" className={`${className} blur-2xl scale-125 opacity-70`} style={{ objectFit: "cover" }} />
       )}
       <img ref={ref} src={src} alt={alt} className={className} style={over ? { ...style, objectFit: "contain" } : style} {...rest} />
     </>

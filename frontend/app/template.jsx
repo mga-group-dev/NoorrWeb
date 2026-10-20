@@ -8,7 +8,7 @@ export default function Template({ children }) {
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, filter: "blur(6px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

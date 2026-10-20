@@ -14,6 +14,9 @@ export const scrollToId = (id) => {
 
 export default function useLenis() {
   useEffect(() => {
+    // Lenis only smooths the mouse wheel; touch scrolling stays native either way. On touch-only devices
+    // it would just add work to every scroll frame, so phones and tablets scroll natively without it.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
     let raf;
     const loop = (t) => {

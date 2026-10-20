@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useReducedMotion, useInView } from "fr
 import Link from "next/link";
 import Ornament from "./Ornament";
 import { EASE, Counter } from "./ui/Reveal";
+import { srcSetOf } from "@/content";
 
 // Fixed positions (not random) so server and client render the same dust motes.
 const MOTES = Array.from({ length: 14 }, (_, i) => ({
@@ -32,7 +33,7 @@ export default function OrnamentBand({ children, img = "/media/stage-purple.webp
     <section ref={ref} className="relative isolate overflow-hidden bg-[#15172a] text-center" aria-label="Motto">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <motion.div style={reduce ? undefined : { y }} className="absolute inset-x-0 -top-[15%] h-[130%]">
-          <img src={img} alt="" loading="lazy" decoding="async" className="cine-kenburns w-full h-full object-cover" style={{ objectPosition: focus }} />
+          <img src={img} srcSet={srcSetOf(img)} sizes="100vw" alt="" loading="lazy" decoding="async" className="cine-kenburns w-full h-full object-cover" style={{ objectPosition: focus }} />
         </motion.div>
         <div className="cine-grade absolute inset-0" />
         <div className="cine-beam cine-beam-l" />
@@ -70,7 +71,7 @@ export default function OrnamentBand({ children, img = "/media/stage-purple.webp
                       <motion.span
                         className={`inline-block ${last ? "f-script text-[1.12em] text-[#ffb38a] px-1" : ""}`}
                         initial={reduce ? false : { opacity: 0, y: "0.5em", filter: "blur(10px)" }}
-                        animate={show ? { opacity: 1, y: 0, filter: "blur(0px)" } : undefined}
+                        animate={show ? { opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } } : undefined}
                         transition={{ duration: 1, ease: EASE, delay: 0.6 + i * 0.1 }}
                       >
                         {w}

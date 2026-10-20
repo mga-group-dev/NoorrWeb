@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { focusOf, srcSetOf } from "@/content";
+import { focusOf, srcSetOf, blurOf } from "@/content";
 import { useOverCrop } from "./SmartImg";
 
 export const EASE = [0.22, 1, 0.36, 1];
@@ -13,7 +13,7 @@ export const Reveal = ({ children, delay = 0, className = "", y = 40 }) => {
     <motion.div
       className={className}
       initial={reduce ? false : { opacity: 0, y, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 1.1, ease: EASE, delay }}
     >
@@ -92,7 +92,7 @@ export const Frame = ({ src, alt = "", className = "", priority = false, focus, 
   return (
     <div ref={ref} className={`frame ${inView ? "is-in" : ""} ${className}`}>
       {contain && (
-        <img src={src} srcSet={srcSet} sizes={sizes} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 blur-2xl opacity-60 scale-125" />
+        <img src={blurOf(src)} alt="" aria-hidden="true" decoding="async" className="absolute inset-0 blur-2xl opacity-60 scale-125" />
       )}
       <img
         ref={imgRef}

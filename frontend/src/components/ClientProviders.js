@@ -37,11 +37,41 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Always-running effects (grain, beams, glows, drifting gradients) are paused while off screen, so phones
+// don't spend frames on things nobody can see. On screen they run exactly as before.
+const LOOPING = ".cine-grain, .cine-beam, .cine-mote, .cine-kenburns, .glow-breathe, .sun-drift, .wordmark-pan, .band-sun, .reel-track";
+const PauseOffscreen = () => {
+  const pathname = usePathname();
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle("anim-off", !e.isIntersecting)),
+      { rootMargin: "200px 0px" }
+    );
+    const watch = () => document.querySelectorAll(LOOPING).forEach((el) => io.observe(el));
+    watch();
+    // Sections that mount later (after hydration or a client-side change) are picked up too.
+    // Batched to one scan per 500ms, since counters and carousels change the DOM every frame.
+    let queued = 0;
+    const mo = new MutationObserver(() => {
+      if (!queued) queued = setTimeout(() => ((queued = 0), watch()), 500);
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      clearTimeout(queued);
+      mo.disconnect();
+      io.disconnect();
+    };
+  }, [pathname]);
+  return null;
+};
+
 export default function ClientProviders({ children }) {
   useLenis();
   return (
     <>
       <ScrollToTop />
+      <PauseOffscreen />
       <Navbar />
       <ErrorBoundary>{children}</ErrorBoundary>
       <Footer />

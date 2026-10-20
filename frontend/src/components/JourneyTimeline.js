@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { CAREER, focusOf, srcSetOf } from "@/content";
+import { CAREER, focusOf, srcSetOf, blurOf } from "@/content";
 import { EASE } from "./ui/Reveal";
 
 const INTERVAL = 5000;
@@ -112,7 +112,7 @@ export default function JourneyTimeline() {
                 transition={{ duration: reduce ? 0.3 : 1.1, ease: EASE }}
               >
                 {cur.contain && (
-                  <img src={cur.img} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-60" />
+                  <img src={blurOf(cur.img)} alt="" aria-hidden="true" decoding="async" className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 opacity-60" />
                 )}
                 <img
                   src={cur.img}

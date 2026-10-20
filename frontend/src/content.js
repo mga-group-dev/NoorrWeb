@@ -21,8 +21,16 @@ export const isWide = (src) => (IMAGES[src]?.w || 0) / (IMAGES[src]?.h || Infini
 export const srcSetOf = (src) => {
   const w = IMAGES[src]?.w;
   if (!w) return undefined;
-  return w > 800 ? `${src.replace(/\.webp$/, ".800.webp")} 800w, ${src} ${w}w` : `${src} ${w}w`;
+  // Photos wider than 600px also have a `.480.webp` copy for small tiles on phones (not the cut-outs).
+  const small = w > 600 && !src.includes("/cutouts/") ? `${src.replace(/\.webp$/, ".480.webp")} 480w, ` : "";
+  if (w <= 800) return `${small}${src} ${w}w`;
+  // Photos wider than 1700px also have a `.1600.webp` copy for laptops and tablets.
+  const mid = w > 1700 ? `, ${src.replace(/\.webp$/, ".1600.webp")} 1600w` : "";
+  return `${small}${src.replace(/\.webp$/, ".800.webp")} 800w${mid}, ${src} ${w}w`;
 };
+
+// The smallest copy of a photo, for blurred backdrops where detail can't be seen anyway.
+export const blurOf = (src) => (IMAGES[src]?.w > 600 && !src.includes("/cutouts/") ? src.replace(/\.webp$/, ".480.webp") : src);
 
 export const IDENTITY = {
   name: "Noorr Khan",
@@ -32,7 +40,7 @@ export const IDENTITY = {
 };
 
 export const CONTACT = {
-  phones: ["9167439223", "9967260708"],
+  phones: ["9967260708", "9167439223"],
   email: "choreographernoorkhan@gmail.com",
   instagram: { handle: "@noorkhaanofficial", url: "https://instagram.com/noorkhaanofficial" },
   facebook: { handle: "noordanceislife", url: "https://facebook.com/noordanceislife" },
@@ -430,7 +438,13 @@ const VIDEO = {
 export const KANTARA_VIDEO = VIDEO.kantara;
 // From Noorr's Instagram reel of 21 November 2022 (CIDCO flats ad shoot, Ghansoli).
 export const CIDCO_VIDEO = V("cidco-ad", "CIDCO homes ad film", "Noorr as the lead model, Ghansoli, Navi Mumbai", "0:42");
-export const STAGE_VIDEOS = [VIDEO.entry, VIDEO.superKids, VIDEO.teaser, VIDEO.fbStage, VIDEO.sr2585];
+// From Noorr's Instagram sangeet reels, compressed in /public/media/video. Shown on /weddings.
+export const SANGEET_VIDEOS = [
+  V("sangeet-groom-mom", "Groom's mom and aunties", "Living-room rehearsals to the sangeet stage", "1:12", true),
+  V("sangeet-groom-cousins", "Groom and cousins", "Practice time for the family act", "1:10", true),
+  V("sangeet-bride-mom", "Bride's mom, for her daughter", "A dedication performance at the sangeet", "3:20", true),
+];
+export const STAGE_VIDEOS =[VIDEO.entry, VIDEO.superKids, VIDEO.teaser, VIDEO.fbStage, VIDEO.sr2585];
 export const HOME_VIDEOS = [VIDEO.entry, VIDEO.kantara, VIDEO.teaser, VIDEO.superKids, VIDEO.fbStage, VIDEO.sr2787, VIDEO.sr2585, VIDEO.olive];
 export const SCHOOL_VIDEOS = [
   VIDEO.teaser, VIDEO.superKids, VIDEO.entry, VIDEO.fbStage, VIDEO.fb2816, VIDEO.sr2787, VIDEO.sr2786, VIDEO.sr2784, VIDEO.fb2815,
