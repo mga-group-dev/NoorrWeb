@@ -12,10 +12,11 @@ export const Reveal = ({ children, delay = 0, className = "", y = 40 }) => {
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { opacity: 0, y, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1.1, ease: EASE, delay }}
+      // Opacity and movement only: animating a blur filter repaints every frame and stutters on phones.
+      initial={reduce ? false : { opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, ease: EASE, delay }}
     >
       {children}
     </motion.div>

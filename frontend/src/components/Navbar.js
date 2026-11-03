@@ -17,6 +17,7 @@ export const LINKS = [
   { label: "Weddings and Sangeet", short: "Weddings & Sangeet", href: "/weddings" },
   { label: "For Corporate", short: "Corporate", href: "/corporate" },
   { label: "For Schools and Colleges", short: "Schools & Colleges", href: "/schools-colleges" },
+  { label: "School Annuals", short: "Annuals", href: "/school-annuals" },
   { label: "Judge and Jury", short: "Judge & Jury", href: "/judge-jury" },
   { label: "Awards and Recognition", short: "Awards", href: "/awards" },
   { label: "Contact", href: "/contact" },
@@ -49,7 +50,7 @@ export default function Navbar() {
       <header
         data-testid={NAV.navbar}
         className={`fixed top-0 inset-x-0 z-50 transition-colors duration-500 ${
-          solid ? "bg-[#FFFFFF]/95 backdrop-blur-xl border-b border-black/10" : "bg-transparent"
+          solid ? "bg-[#FFFFFF] border-b border-black/10" : "bg-transparent"
         }`}
       >
         <div className="wrap h-[68px] flex items-center justify-between gap-4">

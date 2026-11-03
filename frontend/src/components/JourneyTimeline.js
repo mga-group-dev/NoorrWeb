@@ -106,8 +106,8 @@ export default function JourneyTimeline() {
               <motion.div
                 key={cur.img}
                 className="absolute inset-0"
-                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.12, filter: "blur(8px)" }}
-                animate={{ opacity: 1, scale: 1.02, filter: "blur(0px)" }}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.12 }}
+                animate={{ opacity: 1, scale: 1.02 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: reduce ? 0.3 : 1.1, ease: EASE }}
               >

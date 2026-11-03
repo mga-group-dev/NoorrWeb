@@ -1,11 +1,10 @@
 import PageHeader from "@/components/PageHeader";
 import Services from "@/components/Services";
 import PhotoWall from "@/components/PhotoWall";
-import VideoReel from "@/components/VideoReel";
 import CollegeSpotlight from "@/components/CollegeSpotlight";
 import FinalCTA from "@/components/FinalCTA";
 import OrnamentBand from "@/components/OrnamentBand";
-import { COLLEGES, SCHOOL_WALL, COLLEGE_WALL, SCHOOL_VIDEOS, M } from "@/content";
+import { COLLEGES, COLLEGE_WALL, M } from "@/content";
 
 export const metadata = {
   title: "For schools and colleges",
@@ -44,22 +43,11 @@ export default function SchoolsCollegesPage() {
         link={{ href: "https://instagram.com/noorrkhanofficial/", label: "Watch on Instagram" }}
       />
       <Services id="schools" title={["For", "schools"]} />
-      <VideoReel
-        id="annual-day-videos"
-        kicker="Annual days on video"
-        title="Watch the shows"
-        lead="Future Bright School in Ulwe, Sunrise School and Olive School. Tap any video to watch it with sound."
-        videos={SCHOOL_VIDEOS}
-      />
-      <PhotoWall
-        light
-        kicker="School annual days"
-        title="Every child in the spotlight"
-        lead="Fairytale finales, patriotic tributes, a horror-theme act and plenty of backstage smiles."
-        photos={SCHOOL_WALL}
-      />
+      {/* The annual-day videos and photos live on /school-annuals; this band sends visitors there. */}
+      <OrnamentBand img={M("kids-stage")} focus="50% 45%" cta={{ href: "/school-annuals", label: "Watch the school annuals" }}>
+        Every child knows their spot on the night.
+      </OrnamentBand>
       <Services id="colleges" title={["For", "colleges"]} items={COLLEGES} service="College event" />
-      <OrnamentBand img={M("kids-stage")} focus="50% 45%">Every child knows their spot on the night.</OrnamentBand>
       <FinalCTA />
     </main>
   );

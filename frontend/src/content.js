@@ -1,4 +1,4 @@
-﻿// All copy comes from Noorr Khan's profile deck. All photos live in /public/media.
+// All copy comes from Noorr Khan's profile deck. All photos live in /public/media.
 import IMAGES from "./images.json";
 
 // Photos with a ChatGPT-enhanced version are served from /media/enhanced. Add a name here to use that version;
@@ -449,6 +449,35 @@ export const HOME_VIDEOS = [VIDEO.entry, VIDEO.kantara, VIDEO.teaser, VIDEO.supe
 export const SCHOOL_VIDEOS = [
   VIDEO.teaser, VIDEO.superKids, VIDEO.entry, VIDEO.fbStage, VIDEO.fb2816, VIDEO.sr2787, VIDEO.sr2786, VIDEO.sr2784, VIDEO.fb2815,
 ];
+
+// /school-annuals: rehearsals from the "DY Patil Annual" Drive folder, 720p, long clips trimmed to 1:15.
+const DYP = (n, title, length) => V(`dyp-${n}`, title, "DY Patil School, annual day rehearsals", length);
+export const DY_PATIL_VIDEOS = [
+  DYP("01", "Ucha Lamba Kad", "0:44"),
+  DYP("07", "Senior girls, full routine", "1:15"),
+  DYP("06", "Leading from the front", "0:17"),
+  DYP("09", "Skirts and spins", "0:45"),
+  DYP("13", "Teaching the count", "1:15"),
+  DYP("12", "Floor sequence", "1:15"),
+  DYP("08", "All the houses together", "0:23"),
+  DYP("11", "In formation", "0:37"),
+  DYP("10", "Run-through", "0:31"),
+  DYP("17", "The whole class moving", "1:15"),
+  DYP("14", "Hands-on corrections", "0:25"),
+  DYP("15", "House colours", "0:13"),
+  DYP("16", "Big energy", "0:10"),
+  DYP("18", "Arms up", "0:08"),
+  DYP("19", "Juniors on the beat", "0:22"),
+  DYP("05", "First steps", "0:25"),
+  DYP("03", "Warm-up", "0:25"),
+  DYP("04", "Marking the steps", "0:18"),
+];
+
+// From the "Petriotics" Drive folder: students at the RAF camp (first 1:30 of the full performance).
+export const PATRIOTIC_VIDEOS = [V("raf-patriotic", "Students' dance performance at the RAF camp", "Patriotic performance", "1:30")];
+
+// From the "Corporate shows" Drive folder.
+export const CORPORATE_VIDEOS = [V("corp-show", "Corporate show", "Team performance choreographed by Noorr", "1:15")];
 
 // "Count it in" section on the home page: one dance style per count.
 // To swap a photo, change the name inside M("...") to a file in public/media.

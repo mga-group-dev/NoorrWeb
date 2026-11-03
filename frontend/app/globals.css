@@ -544,3 +544,29 @@ p {
 .anim-off * {
   animation-play-state: paused !important;
 }
+
+/* Scroll performance: these overlays repainted every frame (blur + blend modes + animated SVG noise), which
+   made scrolling stutter. Grain is off, beams and photo bands hold still, and filters are dropped. */
+.cine-grain {
+  display: none;
+}
+.cine-beam {
+  animation: none;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 0.45;
+  transform: rotate(var(--tilt));
+  will-change: auto;
+}
+.cine-kenburns {
+  animation: none;
+  filter: none;
+  transform: scale(1.06);
+  will-change: auto;
+}
+.cine-mote {
+  display: none;
+}
+html {
+  scroll-behavior: auto;
+}

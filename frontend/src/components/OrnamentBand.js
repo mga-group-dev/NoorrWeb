@@ -70,8 +70,8 @@ export default function OrnamentBand({ children, img = "/media/stage-purple.webp
                     <span key={i}>
                       <motion.span
                         className={`inline-block ${last ? "f-script text-[1.12em] text-[#ffb38a] px-1" : ""}`}
-                        initial={reduce ? false : { opacity: 0, y: "0.5em", filter: "blur(10px)" }}
-                        animate={show ? { opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } } : undefined}
+                        initial={reduce ? false : { opacity: 0, y: "0.5em" }}
+                        animate={show ? { opacity: 1, y: 0 } : undefined}
                         transition={{ duration: 1, ease: EASE, delay: 0.6 + i * 0.1 }}
                       >
                         {w}

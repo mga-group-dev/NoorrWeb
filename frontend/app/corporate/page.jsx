@@ -1,6 +1,8 @@
 import PageHeader from "@/components/PageHeader";
 import { CidcoFeature, CorporateOfferings, CorporateProcess } from "@/components/CorporateSections";
 import FinalCTA from "@/components/FinalCTA";
+import VideoReel from "@/components/VideoReel";
+import { CORPORATE_VIDEOS } from "@/content";
 
 export const metadata = {
   title: "For corporate",
@@ -18,6 +20,13 @@ export default function CorporatePage() {
       </PageHeader>
       <CidcoFeature />
       <CorporateOfferings />
+      <VideoReel
+        id="corporate-videos"
+        kicker="Corporate shows on video"
+        title="Watch a team on stage"
+        lead="An office team performing a routine Noorr choreographed for their corporate show. Tap to watch it with sound."
+        videos={CORPORATE_VIDEOS}
+      />
       <CorporateProcess />
       <FinalCTA />
     </main>
