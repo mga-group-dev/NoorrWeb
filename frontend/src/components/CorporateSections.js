@@ -20,7 +20,7 @@ export function CidcoFeature() {
         </h2>
         <Reveal delay={0.05}>
           <p className="text-lg text-[var(--body)] leading-relaxed mt-5 max-w-[60ch] mx-auto text-center">
-            In November 2022 Noorr was the lead model in CIDCO&apos;s ad film for its flats in Ghansoli, Navi Mumbai: drone shots of
+            In November 2022 Noorr was the lead model in CIDCO&apos;s ad film for its flats in Navi Mumbai: drone shots of
             the new towers, and Noorr bringing the idea of a first home to life on camera.
           </p>
         </Reveal>

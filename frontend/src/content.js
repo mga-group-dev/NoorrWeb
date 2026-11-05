@@ -42,7 +42,7 @@ export const IDENTITY = {
 export const CONTACT = {
   phones: ["9967260708", "9167439223"],
   email: "choreographernoorkhan@gmail.com",
-  instagram: { handle: "@noorkhaanofficial", url: "https://instagram.com/noorkhaanofficial" },
+  instagram: { handle: "@noorrkhanofficial", url: "https://www.instagram.com/noorrkhanofficial/" },
   facebook: { handle: "noordanceislife", url: "https://facebook.com/noordanceislife" },
   linkedin: { handle: "Noorr Khan", url: "https://www.linkedin.com/in/noorr-khan-81bab2443/" },
   whatsapp: "919167439223",
@@ -90,7 +90,7 @@ export const CAREER = [
   { year: "2011", tag: "Films", title: "Bodyguard", body: "Dancing on the sets of Bodyguard with Salman Khan.", img: M("shoot-1") },
   { year: "2013", tag: "Films", title: "Ramleela", body: "In the colour and chaos of Ramleela, sharing the frame with Ranveer Singh.", img: M("film-ramleela") },
   { year: "2017", tag: "Award", title: "Best Choreographer", body: "Named Best Choreographer at Bombay's Dancing Fever 2017.", img: M("award-bdf"), contain: true },
-  { year: "2022", tag: "Brand", title: "The face of CIDCO homes", body: "Lead model in CIDCO's ad film for its new flats in Ghansoli, Navi Mumbai.", img: "/media/video/cidco-ad.webp" },
+  { year: "2022", tag: "Brand", title: "The face of CIDCO homes", body: "Lead model in CIDCO's ad film for its new flats in Navi Mumbai.", img: "/media/video/cidco-ad.webp" },
   { year: "2024", tag: "Judge", title: "On the panel at RJ College", body: "Judging Pehchaan at Ramniranjan JhunJhunWala College, then dancing with the finalists.", img: M("drive/sps-4462") },
   { year: "", tag: "Screen", title: "The Kantara look", body: "Stepping into a full Kantara character look for an upcoming project.", img: M("kantara") },
 ];
@@ -364,7 +364,6 @@ export const COLLEGE_WALL = wall("Noorr Khan at Ramniranjan JhunJhunWala College
   ["drive/sps-5000", "A student finalist on stage"],
   ["drive/sps-5004", "A face-off with a student dancer"],
   ["drive/sps-4462", "Taking the stage at RJ College"],
-  ["drive/sps-4961", "Certificates for the winners"],
   "drive/sps-5013",
   "drive/sps-5033",
   ["drive/sps-4968", "Trophy for the winning crew"],
@@ -423,7 +422,7 @@ export const KANTARA_BTS = [
 const V = (name, title, line, length, vertical = false) => ({ src: `/media/video/${name}.mp4`, poster: `/media/video/${name}.webp`, title, line, length, vertical });
 const VIDEO = {
   teaser: V("annual-day-teaser", "Annual day teaser", "Future Bright School, Ulwe", "0:47"),
-  entry: V("nk-entry", "The NK entry", "Annual day showstopper", "1:50"),
+  entry: V("nk-entry", "The NRK entry", "Annual day showstopper", "1:50"),
   kantara: V("kantara-look", "Kantara look", "Character feature", "0:30", true),
   superKids: V("super-kids", "Super Kids annual dance", "Sunrise School", "0:54"),
   fbStage: V("fb-stage", "Lights up at Future Bright", "Future Bright School, Ulwe", "1:30"),
@@ -436,8 +435,8 @@ const VIDEO = {
   olive: V("olive-8867", "Under the open sky", "Olive School annual day", "0:08"),
 };
 export const KANTARA_VIDEO = VIDEO.kantara;
-// From Noorr's Instagram reel of 21 November 2022 (CIDCO flats ad shoot, Ghansoli).
-export const CIDCO_VIDEO = V("cidco-ad", "CIDCO homes ad film", "Noorr as the lead model, Ghansoli, Navi Mumbai", "0:42");
+// From Noorr's Instagram reel of 21 November 2022 (CIDCO flats ad shoot).
+export const CIDCO_VIDEO = V("cidco-ad", "CIDCO homes ad film", "Noorr as the lead model, Navi Mumbai", "0:42");
 // From Noorr's Instagram sangeet reels, compressed in /public/media/video. Shown on /weddings.
 export const SANGEET_VIDEOS = [
   V("sangeet-groom-mom", "Groom's mom and aunties", "Living-room rehearsals to the sangeet stage", "1:12", true),

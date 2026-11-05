@@ -60,7 +60,7 @@ const JSON_LD = {
       email: "choreographernoorkhan@gmail.com",
       telephone: "+91-9967260708",
       address: { "@type": "PostalAddress", addressLocality: "Navi Mumbai", addressRegion: "Maharashtra", addressCountry: "IN" },
-      sameAs: ["https://instagram.com/noorkhaanofficial", "https://facebook.com/noordanceislife", "https://www.linkedin.com/in/noorr-khan-81bab2443/"],
+      sameAs: ["https://www.instagram.com/noorrkhanofficial/", "https://facebook.com/noordanceislife", "https://www.linkedin.com/in/noorr-khan-81bab2443/"],
       founder: [{ "@type": "Organization", name: "NR Institute of Dance" }],
     },
     {

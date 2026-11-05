@@ -236,9 +236,9 @@ export function Beyond(tone) {
       <Split {...tone} kicker="Media and modeling" title="Beyond dance" figure={<VideoFigure video={CIDCO_VIDEO} aspect="aspect-video" />}>
         <p>
           Dance opened other doors too. In November 2022 Noorr was the lead model in CIDCO&apos;s ad film for its new flats in
-          Ghansoli, Navi Mumbai, bringing the idea of a first home to life on camera.
+          Navi Mumbai, bringing the idea of a first home to life on camera.
         </p>
-        <Point title="Lead model, CIDCO homes ad film">Ghansoli, Navi Mumbai, 2022. Tap the video to watch it with sound.</Point>
+        <Point title="Lead model, CIDCO homes ad film">Navi Mumbai, 2022. Tap the video to watch it with sound.</Point>
       </Split>
   );
 }

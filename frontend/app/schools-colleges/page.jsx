@@ -40,7 +40,7 @@ export default function SchoolsCollegesPage() {
         name="SNDT College"
         place="Mumbai"
         lead="Noorr has also sat on the judging panel for dance competitions at SNDT College. Follow his Instagram for more from his work with colleges."
-        link={{ href: "https://instagram.com/noorrkhanofficial/", label: "Watch on Instagram" }}
+        link={{ href: "https://www.instagram.com/noorrkhanofficial/", label: "Watch on Instagram" }}
       />
       <Services id="schools" title={["For", "schools"]} />
       {/* The annual-day videos and photos live on /school-annuals; this band sends visitors there. */}
